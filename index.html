@@ -1,0 +1,1222 @@
+<!--
+Made by:
+NotZeri(Gay btw)
+lunch(vibecoder btw)
+5_5
+
+
+
+
+Changelog:
+
+NotZeri: Added da switch
+NotZeri: Added shapes
+NotZeri: Added abs, button, store. Updated ui(lunch you lie about making ui from scratch)
+lunch: Made from scratch ui(starting blocks: const pid mul add sub div invert min max clamp att alt thruster button.)
+
+
+
+Dev talk:
+
+NotZeri: why didn't you just directly copy it instead of using python
+lunch: copying to github problem
+NotZeri: why is the code all like no spaces at all
+NotZeri: i sent that like hours ago i really gotta add time to the chat and changelog
+lunch: shut the fuck up
+NotZeri: lunch are you the best vibecoder?
+NotZeri: WOAHHHH I SAW THAT SHIT
+System: Cleared chat(lunch)
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learn VCK Logic</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='8' y='4' width='16' height='18' rx='4' fill='%23ababab'/%3E%3Cpath d='M12 24 C12 27 14 30 16 31 C18 30 20 27 20 24 Z' fill='%23f6a623'/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#fff;color:#101010;display:flex;flex-direction:column;height:100dvh;overflow:hidden;-webkit-user-select:none;user-select:none}
+button{font-family:inherit}
+header{display:flex;align-items:center;gap:8px;border-bottom:2.5px solid #101010;padding:8px 12px;background:#fff;z-index:40;flex-wrap:nowrap;overflow-x:auto}
+header h1{font-size:15px;font-weight:900;letter-spacing:-0.02em;margin-right:6px;white-space:nowrap}
+.tbtn{height:32px;padding:0 9px;border:2px solid #101010;background:#fff;color:#101010;font-size:9.5px;font-weight:900;text-transform:uppercase;letter-spacing:0.02em;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:5px;transition:background .12s,color .12s}
+.tbtn:hover{background:#101010;color:#fff}
+.tbtn.on{background:#101010;color:#fff}
+.tbtn .ic{font-size:11px;line-height:1}
+#main{flex:1;display:flex;min-height:0;position:relative}
+#palBtn{display:none}
+#palette{width:168px;flex-shrink:0;border-right:2.5px solid #101010;background:#fff;padding:10px;overflow-y:auto;z-index:50}
+.psec{font-size:8.5px;font-weight:900;letter-spacing:0.12em;color:#8a8a8a;margin:10px 0 5px}
+.psec:first-child{margin-top:0}
+.pitem{display:flex;align-items:center;gap:7px;border:2px solid #101010;background:#fff;padding:5px 7px;margin-bottom:6px;cursor:pointer;transition:background .12s,color .12s}
+.pitem:hover{background:#101010;color:#fff}
+.pthumb{width:32px;height:28px;flex-shrink:0;border:2px solid #101010;display:flex;align-items:center;justify-content:center;font-weight:900;letter-spacing:-0.02em;overflow:hidden}
+.ptxt{min-width:0}
+.ptxt b{display:block;font-size:11px;font-weight:900;letter-spacing:-0.01em}
+.ptxt span{display:block;font-size:7.5px;font-weight:700;opacity:.55;margin-top:1px}
+#cv{flex:1;position:relative;overflow:hidden;touch-action:none;cursor:grab;background-image:radial-gradient(#d7d7d7 1.1px,transparent 1.1px);background-size:22px 22px}
+#cv.panning{cursor:grabbing}
+#wires{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:30}
+#wires .wire{fill:none;stroke:#55b2ec;stroke-width:3.5}
+#wires .wire.sel{stroke:#1f80c4;stroke-width:5}
+#wires .hit{fill:none;stroke:transparent;stroke-width:14;pointer-events:stroke;cursor:pointer}
+#wires .temp{fill:none;stroke:#55b2ec;stroke-width:2.5;stroke-dasharray:6 5}
+#wires.nohit .hit{pointer-events:none}
+#world{position:absolute;left:0;top:0;transform-origin:0 0}
+.node{position:absolute;background:#fff;border:2.5px solid #101010;border-radius:12;cursor:grab;touch-action:none;pointer-events:auto}
+.node.sel{box-shadow:0 0 0 2px #ffffff,0 0 0 5.5px #101010}
+.ntitle{font-weight:900;letter-spacing:-0.02em;font-size:15px;user-select:none}
+.port{position:absolute;display:flex;align-items:center;justify-content:center;border-radius:50%;cursor:crosshair;touch-action:none}
+.port .pc{border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;letter-spacing:-0.02em;user-select:none}
+.chip{position:absolute;font-size:8.5px;font-weight:700;line-height:13px;padding:0 4px;white-space:nowrap;pointer-events:none;z-index:15}
+.chip.out{background:#101010;color:#fff}
+.chip.in{background:#fff;color:#101010;border:1px solid #d4d4d4}
+.del{position:absolute;width:19px;height:19px;background:#101010;color:#fff;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transition:opacity .12s;z-index:20;font-size:11px;line-height:1}
+.node:hover .del,.node.sel .del,.shape:hover .del,.shape.sel .del{opacity:1}
+.shape{position:absolute;cursor:grab;touch-action:none;z-index:5}
+.shape.sel{box-shadow:0 0 0 2px #ffffff,0 0 0 5.5px #101010}
+.shandle{position:absolute;width:9px;height:9px;background:#101010;border:1.5px solid #fff;display:none;z-index:30}
+.shape:hover .shandle,.shape.sel .shandle{display:block}
+.num{width:100%;min-width:0;text-align:center;font-weight:700;font-size:9.5px;border:1px solid #d4d4d4;padding:2px 1px;outline:none;background:#fff;color:#101010;-webkit-user-select:text;user-select:text}
+.num:focus{border-color:#101010}
+.plabel{display:block;font-size:6.5px;font-weight:900;color:#a3a3a3;line-height:1;margin-bottom:2px}
+.prow{position:absolute;left:12px;right:12px;bottom:8px;display:flex;gap:6px;align-items:flex-end}
+.prow label{flex:1;min-width:0}
+.consthead{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 12px 4px}
+.consthead .num{width:44px;font-size:10px}
+.ctrack{position:relative;margin:0 12px 12px;border-radius:9px;background:#e9e9e9;height:44px;cursor:pointer;touch-action:none}
+.ctrack .lab{position:absolute;top:50%;transform:translateY(-50%);font-size:8px;font-weight:700;color:#737373}
+.ctrack .rail{position:absolute;top:50%;transform:translateY(-50%);left:22px;right:22px;height:2.5px;border-radius:99px;background:#262626}
+.ctrack .knob{position:absolute;top:50%;width:14px;height:14px;border-radius:50%;background:#262626;border:2px solid #fff;transform:translate(-50%,-50%)}
+.dome{position:absolute;left:50%;transform:translateX(-50%);top:0;width:66px;height:38px;border-radius:34px 34px 0 0}
+.dome.on{background:#3ed45c}
+.dome.off{background:#37a847}
+.bbase{position:absolute;left:50%;transform:translateX(-50%);top:28px;width:104px;height:44px;border-radius:8px;background:#a6a6a6}
+.domehit{position:absolute;left:50%;transform:translateX(-50%);top:0;width:70px;height:56px;cursor:pointer}
+.sensor{background:#b13a2e;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.sensor .ntitle{color:#fff;font-size:26px}
+.tbody{position:absolute;left:15px;top:28px;width:120px;height:150px;background:#ababab;border-radius:10px}
+.tpct{position:absolute;left:15px;top:95px;width:120px;text-align:center;font-weight:900;font-size:15px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,0.35);pointer-events:none;display:none}
+.flame{position:absolute;left:39px;top:150px;width:72px;height:66px;transform-origin:50% 12%;pointer-events:none;overflow:visible;display:none}
+.flame .fl{animation:flicker .22s linear infinite;transform-origin:50% 10%}
+@keyframes flicker{0%{transform:scale(1,1)}50%{transform:scale(1.06,.94)}100%{transform:scale(.97,1.05)}}
+#simpanel{position:absolute;left:10px;bottom:10px;width:296px;max-height:46vh;overflow-y:auto;background:#fff;border:2.5px solid #101010;padding:10px;z-index:40;display:none}
+#simpanel h3{font-size:9px;font-weight:900;letter-spacing:0.1em;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+.srow{display:flex;align-items:center;gap:6px;font-size:8px;font-weight:900;color:#525252;margin-bottom:4px}
+.srow .sl{flex:1;min-width:0;accent-color:#171717;height:4px}
+.srow .sv{width:34px;text-align:right;font-size:8.5px;color:#101010}
+.snode{font-size:8px;font-weight:900;letter-spacing:0.06em;color:#101010;border-top:1px solid #e5e5e5;padding-top:6px;margin:7px 0 4px}
+.tbar{flex:1;height:7px;border:1.5px solid #101010;overflow:hidden;background:#fff}
+.tbar i{display:block;height:100%;background:#101010;width:0%}
+footer{border-top:2.5px solid #101010;padding:6px 14px;display:flex;justify-content:space-between;align-items:center;font-size:8.5px;font-weight:900;letter-spacing:0.18em;background:#fff}
+#toast{position:fixed;bottom:58px;left:50%;transform:translateX(-50%) translateY(8px);background:#101010;color:#fff;font-size:10px;font-weight:900;letter-spacing:0.04em;padding:8px 14px;opacity:0;transition:opacity .18s,transform .18s;z-index:100;pointer-events:none;text-transform:uppercase}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.swhit{position:absolute;left:9px;top:14px;width:72px;height:192px;cursor:pointer}
+.swframe{position:absolute;left:9px;top:14px;width:72px;height:192px;background:#b3b3b3;border-radius:16px}
+.swpanel{position:absolute;left:19px;top:26px;width:52px;height:168px;background:#8d8d8d;border-radius:11px}
+.swknob{position:absolute;left:50%;transform:translateX(-50%);width:52px;height:52px;border-radius:50%;background:#e0473c;box-shadow:inset 0 -4px 0 rgba(0,0,0,.15);transition:top .13s;pointer-events:none}
+.swtri{position:absolute;right:-1px;top:104px;transform:translateY(-50%);width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:13px solid #e0473c}
+#site{display:none;flex-direction:column;flex:1;min-height:0;overflow-y:auto;background:#fff}
+#app{display:none;flex-direction:column;flex:1;min-height:0}
+body[data-view=site] #site{display:flex}
+body[data-view=planner] #app{display:flex}
+#snav{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:24px;padding:0 22px;height:58px;border-bottom:2.5px solid #101010;background:#fff}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:13px;letter-spacing:-0.01em}
+.brand i{width:15px;height:15px;background:#101010;display:block}
+.slink{font-size:9.5px;font-weight:900;letter-spacing:0.05em;color:#101010;text-decoration:none;padding:19px 2px 16px;border-bottom:3px solid transparent}
+.slink.act{border-bottom-color:#101010}
+.slink:hover{border-bottom-color:#101010}
+.ctabtn{height:34px;display:flex;align-items:center;padding:0 14px;background:#101010;color:#fff;font-size:9.5px;font-weight:900;letter-spacing:0.05em;text-decoration:none}
+.ctabtn:hover{background:#fff;color:#101010;outline:2px solid #101010;outline-offset:-2px}
+#shero{padding:36px 22px 4px;max-width:1160px;width:100%;margin:0 auto}
+#shero h2{font-size:36px;font-weight:900;letter-spacing:-0.03em;line-height:1}
+#shero p{margin-top:8px;font-size:12px;font-weight:600;color:#6e6e6e}
+#sbody{display:flex;gap:28px;padding:24px 22px 40px;max-width:1160px;width:100%;margin:0 auto;flex:1;align-items:flex-start}
+#sside{width:190px;flex-shrink:0;position:sticky;top:82px}
+.ssh{font-size:8.5px;font-weight:900;letter-spacing:0.12em;color:#8a8a8a;margin-bottom:8px}
+.scat{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 10px;border:2px solid transparent;font-size:10px;font-weight:800;cursor:pointer;user-select:none;margin-bottom:2px}
+.scat:hover{border-color:#101010}
+.scat.act{border-color:#101010;background:#101010;color:#fff}
+.scat span{opacity:.5;font-size:9px;font-weight:800}
+#scontent{flex:1;min-width:0}
+#scount{font-size:9px;font-weight:900;letter-spacing:0.08em;color:#8a8a8a;margin-bottom:12px}
+#sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.scard{border:2px solid #101010;background:#fff;cursor:pointer;display:flex;flex-direction:column;color:#101010}
+.scard:hover{background:#101010;color:#fff}
+.chead{display:flex;justify-content:space-between;align-items:center;padding:10px}
+.cthumb{width:36px;height:36px;background:#101010;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:11px;flex-shrink:0}
+.scard:hover .cthumb{background:#fff;color:#101010}
+.scat2{font-size:8px;font-weight:900;letter-spacing:0.1em;color:#8a8a8a}
+.scard:hover .scat2{color:#bdbdbd}
+.cname{font-size:14px;font-weight:900;letter-spacing:-0.01em;padding:0 10px}
+.cdesc{font-size:10px;font-weight:600;color:#6e6e6e;padding:5px 10px 12px;line-height:1.5}
+.scard:hover .cdesc{color:#d9d9d9}
+.cfoot{margin-top:auto;border-top:1.5px solid #101010;padding:7px 10px;font-size:8px;font-weight:900;letter-spacing:0.06em;color:#8a8a8a}
+.scard:hover .cfoot{color:#bdbdbd}
+#sdetail{max-width:780px}
+.dback{display:inline-flex;align-items:center;gap:6px;font-size:9px;font-weight:900;letter-spacing:0.05em;padding:7px 11px;border:2px solid #101010;color:#101010;text-decoration:none}
+.dback:hover{background:#101010;color:#fff}
+.dtitle{font-size:32px;font-weight:900;letter-spacing:-0.03em;margin:18px 0 2px;line-height:1}
+.dcat{font-size:9px;font-weight:900;letter-spacing:0.12em;color:#8a8a8a;margin-bottom:14px}
+.ddesc{font-size:13px;line-height:1.7;font-weight:600;color:#2b2b2b;max-width:660px}
+.dsec{font-size:9px;font-weight:900;letter-spacing:0.12em;color:#8a8a8a;margin:26px 0 6px;border-top:2.5px solid #101010;padding-top:12px}
+.drow{display:flex;gap:12px;align-items:baseline;padding:8px 0;border-bottom:1.5px solid #e9e9e9}
+.dtag{min-width:56px;font-size:7.5px;font-weight:900;letter-spacing:0.06em;border:1.5px solid #101010;padding:2px 0;text-align:center;flex-shrink:0}
+.drow b{font-size:11.5px;font-weight:900;min-width:92px}
+.drow span{font-size:10.5px;font-weight:600;color:#6e6e6e;line-height:1.5}
+.duse{border-left:4px solid #101010;padding:2px 0 2px 14px;font-size:11px;font-weight:600;color:#2b2b2b;line-height:1.65;max-width:640px}
+#sfoot{border-top:2.5px solid #101010;padding:8px 14px;display:flex;justify-content:space-between;align-items:center;font-size:8.5px;font-weight:900;letter-spacing:0.18em;background:#fff}
+#fileIn{display:none}
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-thumb{background:#d4d4d4}
+@media (max-width:820px){
+#sbody{flex-direction:column;gap:18px;padding:20px 14px 30px}
+#sside{width:100%;position:static;display:flex;flex-wrap:wrap;gap:6px}
+.ssh{width:100%;margin-bottom:2px}
+.scat{border:2px solid #101010;padding:6px 10px;margin-bottom:0}
+#shero{padding:26px 14px 2px}
+#shero h2{font-size:27px}
+#snav{gap:14px;padding:0 14px}
+#palBtn{display:flex}
+#palette{position:absolute;left:10px;top:56px;bottom:10px;width:156px;border:2.5px solid #101010;transform:translateX(-115%);transition:transform .18s;box-shadow:4px 4px 0 rgba(0,0,0,0.08)}
+body.pal #palette{transform:translateX(0)}
+header h1{font-size:13px}
+#simpanel{width:240px}
+}
+</style>
+</head>
+<body>
+<section id="site">
+<nav id="snav">
+<a class="brand" href="#blocks" style="text-decoration:none;color:#101010"><i></i><-- blok or blocks --></a>
+<a class="slink" data-nav="blocks" href="#blocks">BLOCKS</a>
+<span style="flex:1"></span>
+<a class="ctabtn" href="#planner">LOGIC PLANNER</a>
+</nav>
+<div id="shero">
+<h2>Learn VCK Logic!</h2>
+<p>Not every logic block in Vehicle Construction Kit but all the good ones - what it does, what goes in, and what comes out. When you are ready, open the Logic Planner and wire something up. oh also you can simulate stuff!</p>
+</div>
+<div id="sbody">
+<aside id="sside"><div class="ssh">CATEGORIES</div></aside>
+<div id="scontent">
+<div id="scount"></div>
+<div id="sgrid"></div>
+<div id="sdetail" style="display:none"></div>
+</div>
+</div>
+<footer id="sfoot"><span>LEARN VCK LOGIC</span><span>MADE FOR VEHICLE CONSTRUCTION KIT</span></footer>
+</section>
+<div id="app">
+<header>
+<button class="tbtn" id="backBtn" title="Back to the site">&#8592; BLOCKS</button>
+<button class="tbtn" id="palBtn" title="Blocks"><span class="ic">+</span>BLOCKS</button>
+<h1>  </h1>
+<button class="tbtn" id="simBtn"><span class="ic">&#9654;</span>SIMULATE</button>
+<button class="tbtn" id="saveBtn"><span class="ic">&#8595;</span>SAVE</button>
+<button class="tbtn" id="loadBtn"><span class="ic">&#8593;</span>LOAD</button>
+<button class="tbtn" id="exportBtn"><span class="ic">&#8681;</span>EXPORT</button>
+<button class="tbtn" id="importBtn"><span class="ic">&#8679;</span>IMPORT</button>
+<button class="tbtn" id="clearBtn"><span class="ic">&#10005;</span>CLEAR</button>
+<span style="flex:1"></span>
+<button class="tbtn" id="zoomOut" title="Zoom out"><span class="ic">&minus;</span></button>
+<button class="tbtn" id="zoomIn" title="Zoom in"><span class="ic">+</span></button>
+<button class="tbtn" id="fitBtn" title="Fit view">FIT</button>
+</header>
+<div id="main">
+<aside id="palette"></aside>
+<div id="cv">
+<div id="world"></div>
+<svg id="wires"><g id="wireG"></g></svg>
+<div id="simpanel"></div>
+</div>
+</div>
+<footer><span>Logic is easy(dih) 1.0</span><span>Disclamer:  Not all the blocks are here so if you need any just ask in the dc and ill add it!</span></footer>
+</div>
+<div id="toast"></div>
+<input type="file" id="fileIn" accept="application/json,.json">
+<script>
+const IN_COLOR='#e0473c',OUT_COLOR='#4a9ce8',AUTOKEY='logic-planner-standalone-auto',SAVEKEY='logic-planner-standalone-save';
+const P=(id,label,x,y,size,dim)=>({id,label,x,y,size,dim});
+const BLOCKS={
+CONST:{title:'CONST',cat:'INPUT',w:190,h:104,tc:false,inputs:[],outputs:[P('OUT','OUT',190,52)],params:[{key:'value',label:'VALUE',def:0,step:0.01,min:-1,max:1}]},
+BUTTON:{title:'BUTTON',cat:'INPUT',w:130,h:88,tc:false,inputs:[],outputs:[P('OUT','OUT',65,72)],params:[{key:'pressed',label:'PRESSED',def:0,step:1}]},
+PID:{title:'PID',cat:'LOGIC',w:200,h:140,tc:true,inputs:[P('TARGET','TARGET',0,50),P('CURRENT','CURRENT',0,86)],outputs:[P('OUT','OUT',200,68)],params:[{key:'kp',label:'P',def:1,step:0.01},{key:'ki',label:'I',def:0,step:0.01},{key:'kd',label:'D',def:0,step:0.01}]},
+ADD:{title:'ADD',cat:'MATH',w:170,h:108,tc:true,inputs:[P('A','A',0,50),P('B','B',0,84)],outputs:[P('OUT','OUT',170,67)],params:[]},
+SUB:{title:'SUB',cat:'MATH',w:170,h:108,tc:true,inputs:[P('A','A',0,50),P('B','B',0,84)],outputs:[P('OUT','OUT',170,67)],params:[]},
+MUL:{title:'MUL',cat:'MATH',w:170,h:108,tc:true,inputs:[P('A','A',0,50),P('B','B',0,84)],outputs:[P('OUT','OUT',170,67)],params:[]},
+DIV:{title:'DIV',cat:'MATH',w:170,h:108,tc:true,inputs:[P('A','A',0,50),P('B','B',0,84)],outputs:[P('OUT','OUT',170,67)],params:[]},
+MIN:{title:'MIN',cat:'MATH',w:170,h:108,tc:true,inputs:[P('A','A',0,50),P('B','B',0,84)],outputs:[P('OUT','OUT',170,67)],params:[]},
+MAX:{title:'MAX',cat:'MATH',w:170,h:108,tc:true,inputs:[P('A','A',0,50),P('B','B',0,84)],outputs:[P('OUT','OUT',170,67)],params:[]},
+INVERT:{title:'INVERT',cat:'MATH',w:170,h:96,tc:true,inputs:[P('IN','IN',0,56)],outputs:[P('OUT','OUT',170,56)],params:[]},
+ABS:{title:'ABS',cat:'MATH',w:170,h:96,tc:true,inputs:[P('IN','IN',0,56)],outputs:[P('OUT','OUT',170,56)],params:[]},
+CLAMP:{title:'CLAMP',cat:'MATH',w:190,h:128,tc:true,inputs:[P('IN','IN',0,48)],outputs:[P('OUT','OUT',190,48)],params:[{key:'min',label:'MIN',def:-1,step:0.01},{key:'max',label:'MAX',def:1,step:0.01}]},
+ATT:{title:'ATT',cat:'SENSORS',w:100,h:104,tc:true,inputs:[],outputs:[P('YAW','YAW',100,26),P('PITCH','PITCH',100,52),P('ROLL','ROLL',100,78)],params:[]},
+ALT:{title:'ALT',cat:'SENSORS',w:100,h:104,tc:true,inputs:[],outputs:[P('ALT','ALT',100,52)],params:[]},
+THRUSTER:{title:'THRUSTER',cat:'OUTPUT',w:150,h:216,tc:true,inputs:[P('THROTTLE','Throttle',75,28,38),P('X','X',55,178,26),P('Y','Y',105,160,26,1)],outputs:[],params:[]},
+SWITCH:{title:'SWITCH',cat:'INPUT',w:90,h:220,tc:true,inputs:[],outputs:[P('ON','OUT',90,22),P('OFF','OUT',90,198)],params:[{key:'on',label:'ON',def:0,step:1}]},
+STORE:{title:'STORE',cat:'LOGIC',w:180,h:124,tc:true,inputs:[P('VALUE','Value',0,34,26),P('STORE','Store',0,90,26)],outputs:[P('OUT','Stored',180,62,26)],params:[]}};
+const PALETTE=[['INPUT',['CONST','BUTTON','SWITCH']],['MATH',['ADD','SUB','MUL','DIV','INVERT','ABS','MIN','MAX','CLAMP']],['LOGIC',['PID','STORE']],['SENSORS',['ATT','ALT']],['OUTPUT',['THRUSTER']],['SHAPES',['SQUARE','GRAY','BLACK']]];
+const uid=()=>Math.random().toString(36).slice(2,10);
+const clamp=(v,lo,hi)=>Math.min(hi,Math.max(lo,v));
+const fmt=v=>v===undefined||v===null||!Number.isFinite(v)?'0':String(Math.round(v*100)/100);
+let nodes=[],wires=[],shapes=[],view={x:0,y:0,k:1},sel=null,simOn=false,auto=true,time=0;
+let env={},pidState={},memState={},outs=new Map(),inVals=new Map(),prevOuts=new Map(),simTimer=null;
+const nodeEls=new Map(),wireEls=new Map(),shapeEls=new Map();
+const $=id=>document.getElementById(id);
+const cv=$('cv'),world=$('world'),wiresSvg=$('wires'),wireG=$('wireG'),palEl=$('palette'),panel=$('simpanel');
+let drag=null,tempPath=null,addCount=0;
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),1600)}
+function defOf(n){return BLOCKS[n.kind]}
+function portDef(n,pid){const d=defOf(n);return d.inputs.find(p=>p.id===pid)||d.outputs.find(p=>p.id===pid)}
+function portPos(n,pid){const p=portDef(n,pid);return p?{x:n.x+p.x,y:n.y+p.y}:null}
+function portR(p){return (p.size||26)/2+6}
+function defParams(kind){const o={};for(const p of BLOCKS[kind].params)o[p.key]=p.def;return o}
+function createNode(kind,x,y){return{id:uid(),kind,x:Math.round(x),y:Math.round(y),params:defParams(kind)}}
+function wirePath(a,b){const dx=clamp(Math.abs(b.x-a.x)*0.5,40,160);return 'M'+a.x+' '+a.y+' C '+(a.x+dx)+' '+a.y+', '+(b.x-dx)+' '+b.y+', '+b.x+' '+b.y}
+function svgEl(tag,attrs){const e=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const k in attrs)e.setAttribute(k,attrs[k]);return e}
+function sanitizeNodes(raw){if(!Array.isArray(raw))return[];const out=[];for(const r of raw){if(!r||typeof r!=='object')continue;const kind=r.kind;if(!BLOCKS[kind]||typeof r.id!=='string')continue;const params=defParams(kind);if(r.params&&typeof r.params==='object'){for(const k of Object.keys(params)){const v=r.params[k];if(typeof v==='number'&&Number.isFinite(v))params[k]=v}}out.push({id:r.id,kind,x:typeof r.x==='number'&&Number.isFinite(r.x)?r.x:0,y:typeof r.y==='number'&&Number.isFinite(r.y)?r.y:0,params})}return out}
+function sanitizeWires(raw,ns){if(!Array.isArray(raw))return[];const ids=new Set(ns.map(n=>n.id));const out=[],seen=new Set();for(const r of raw){if(!r||typeof r!=='object')continue;if(typeof r.id!=='string'||typeof r.fromNode!=='string'||typeof r.fromPort!=='string'||typeof r.toNode!=='string'||typeof r.toPort!=='string')continue;if(!ids.has(r.fromNode)||!ids.has(r.toNode)||r.fromNode===r.toNode)continue;const key=r.fromNode+'|'+r.fromPort+'|'+r.toNode+'|'+r.toPort;if(seen.has(key))continue;seen.add(key);out.push({id:r.id,fromNode:r.fromNode,fromPort:r.fromPort,toNode:r.toNode,toPort:r.toPort})}return out}
+function demoGraph(){const mk=(id,kind,x,y,p)=>({id,kind,x,y,params:Object.assign(defParams(kind),p||{})});const nodes=[mk('btn1','BUTTON',60,120,{pressed:0}),mk('pid1','PID',320,60,{kp:2,ki:0,kd:0.1}),mk('att1','ATT',320,280),mk('thr1','THRUSTER',640,40),mk('con1','CONST',60,320,{value:0.5}),mk('alt1','ALT',60,470),mk('mul1','MUL',320,440),mk('thr2','THRUSTER',640,260),mk('inv1','INVERT',320,620),mk('thr3','THRUSTER',640,480)];const w=(id,fn,fp,tn,tp)=>({id,fromNode:fn,fromPort:fp,toNode:tn,toPort:tp});const wires=[w('w1','btn1','OUT','pid1','TARGET'),w('w2','att1','YAW','pid1','CURRENT'),w('w3','pid1','OUT','thr1','THROTTLE'),w('w4','con1','OUT','mul1','A'),w('w5','alt1','ALT','mul1','B'),w('w6','mul1','OUT','thr2','THROTTLE'),w('w7','att1','ROLL','inv1','IN'),w('w8','inv1','OUT','thr3','THROTTLE')];const shapes=[{id:'sh1',color:'black',x:980,y:180,w:60,h:34},{id:'sh2',color:'gray',x:980,y:214,w:60,h:150},{id:'sh3',color:'white',x:954,y:314,w:26,h:50},{id:'sh4',color:'white',x:1040,y:314,w:26,h:50}];return{nodes,wires,shapes}}
+function autoEnv(t,ph){return{yaw:Math.sin(t*0.6+ph)*0.9,pitch:Math.sin(t*0.45+ph+1.4)*0.7,roll:Math.sin(t*0.85+ph+2.8)*0.8,alt:50+45*Math.sin(t*0.3+ph)}}
+function stepSim(){
+const out=new Map(),inV=new Map();
+const readIn=(nid,port)=>{const w=wires.find(x=>x.toNode===nid&&x.toPort===port);if(!w)return 0;const key=w.fromNode+'|'+w.fromPort;const v=out.get(key);return v!==undefined?v:(prevOuts.get(key)??0)};
+nodes.forEach((n,idx)=>{
+const prm=n.params||{};
+const set=(port,v)=>out.set(n.id+'|'+port,Number.isFinite(v)?v:0);
+const note=(port,v)=>inV.set(n.id+'|'+port,v);
+switch(n.kind){
+case 'CONST':set('OUT',prm.value??0);break;
+case 'BUTTON':set('OUT',prm.pressed?1:0);break;
+case 'SWITCH':{const on=prm.on>0.5;set('ON',on?1:0);set('OFF',on?0:1);break}
+case 'STORE':{const val=readIn(n.id,'VALUE'),trg=readIn(n.id,'STORE');note('VALUE',val);note('STORE',trg);let st=memState[n.id];if(!st){st={v:0};memState[n.id]=st}if(trg>0.5)st.v=val;set('OUT',st.v);break}
+case 'ADD':note('A',readIn(n.id,'A'));note('B',readIn(n.id,'B'));set('OUT',readIn(n.id,'A')+readIn(n.id,'B'));break;
+case 'SUB':note('A',readIn(n.id,'A'));note('B',readIn(n.id,'B'));set('OUT',readIn(n.id,'A')-readIn(n.id,'B'));break;
+case 'MUL':note('A',readIn(n.id,'A'));note('B',readIn(n.id,'B'));set('OUT',readIn(n.id,'A')*readIn(n.id,'B'));break;
+case 'DIV':{note('A',readIn(n.id,'A'));const b=readIn(n.id,'B');note('B',b);set('OUT',Math.abs(b)<1e-9?0:readIn(n.id,'A')/b);break}
+case 'MIN':note('A',readIn(n.id,'A'));note('B',readIn(n.id,'B'));set('OUT',Math.min(readIn(n.id,'A'),readIn(n.id,'B')));break;
+case 'MAX':note('A',readIn(n.id,'A'));note('B',readIn(n.id,'B'));set('OUT',Math.max(readIn(n.id,'A'),readIn(n.id,'B')));break;
+case 'INVERT':note('IN',readIn(n.id,'IN'));set('OUT',-readIn(n.id,'IN'));break;
+case 'ABS':note('IN',readIn(n.id,'IN'));set('OUT',Math.abs(readIn(n.id,'IN')));break;
+case 'CLAMP':note('IN',readIn(n.id,'IN'));set('OUT',clamp(readIn(n.id,'IN'),prm.min??-1,prm.max??1));break;
+case 'PID':{note('TARGET',readIn(n.id,'TARGET'));note('CURRENT',readIn(n.id,'CURRENT'));const target=readIn(n.id,'TARGET'),current=readIn(n.id,'CURRENT');let st=pidState[n.id];if(!st){st={i:0,pe:0};pidState[n.id]=st}const err=target-current;st.i=clamp(st.i+err*0.016,-50,50);const d=(err-st.pe)/0.016;st.pe=err;set('OUT',(prm.kp??0)*err+(prm.ki??0)*st.i+(prm.kd??0)*d);break}
+case 'ATT':{const e=(auto?autoEnv(time,idx*1.7):(env[n.id]||{yaw:0,pitch:0,roll:0,alt:10}));set('YAW',e.yaw);set('PITCH',e.pitch);set('ROLL',e.roll);break}
+case 'ALT':{const a=auto?autoEnv(time,idx*1.7).alt:((env[n.id]||{alt:10}).alt);set('ALT',a);break}
+case 'THRUSTER':{const t=readIn(n.id,'THROTTLE');note('THROTTLE',t);note('X',readIn(n.id,'X'));note('Y',readIn(n.id,'Y'));out.set(n.id+'|__thrust',clamp(t,-1,1));out.set(n.id+'|__gx',clamp(readIn(n.id,'X'),-1,1));out.set(n.id+'|__gy',clamp(readIn(n.id,'Y'),-1,1));break}
+}});
+return{out,inV}}
+function buildPorts(n,def,frag){
+const items=[...def.inputs.map(p=>({p,dir:'in'})),...def.outputs.map(p=>({p,dir:'out'}))];
+for(const it of items){
+const p=it.p,s=p.size||26;
+const el=document.createElement('div');
+el.className='port';
+el.dataset.port=p.id;el.dataset.dir=it.dir;el.dataset.node=n.id;
+el.style.cssText='left:'+p.x+'px;top:'+p.y+'px;width:'+(s+6)+'px;height:'+(s+6)+'px;transform:translate(-50%,-50%);opacity:'+(p.dim?0.5:1);
+const c=document.createElement('div');c.className='pc';
+c.style.cssText='width:'+s+'px;height:'+s+'px;background:'+(it.dir==='in'?IN_COLOR:OUT_COLOR)+';font-size:'+(s>=34?7.2:6.4)+'px';
+c.textContent=p.label;
+el.appendChild(c);frag.appendChild(el)}}
+function buildChips(n,def,frag){
+for(const p of def.outputs){
+const el=document.createElement('span');el.className='chip out';el.dataset.chip=n.id+'|'+p.id;
+el.style.cssText='left:'+(p.x+portR(p))+'px;top:'+p.y+'px;transform:translateY(-50%);display:none';
+frag.appendChild(el)}
+for(const p of def.inputs){
+const el=document.createElement('span');el.className='chip in';el.dataset.chipin=n.id+'|'+p.id;
+el.style.cssText='left:'+(p.x-portR(p))+'px;top:'+p.y+'px;transform:translate(-100%,-50%);display:none';
+frag.appendChild(el)}}
+function buildDel(frag,top,right){
+const b=document.createElement('button');b.className='del';b.dataset.nodrag='1';b.title='Delete';b.textContent='\u00d7';
+b.style.top=top+'px';b.style.right=right+'px';
+b.addEventListener('pointerdown',e=>e.stopPropagation());
+b.addEventListener('click',e=>{e.stopPropagation();deleteNode(b.closest('.node').dataset.id)});
+frag.appendChild(b)}
+function buildNum(node,pd,frag,extra){
+const lab=document.createElement('label');
+const s=document.createElement('span');s.className='plabel';s.textContent=pd.label;
+const inp=document.createElement('input');inp.type='number';inp.step=pd.step;inp.className='num';inp.value=String(node.params[pd.key]??0);
+if(pd.min!==undefined)inp.min=pd.min;if(pd.max!==undefined)inp.max=pd.max;
+inp.addEventListener('pointerdown',e=>e.stopPropagation());
+inp.addEventListener('input',()=>{const raw=inp.value;if(raw===''||raw==='-'){setParam(node.id,pd.key,0);return}let v=parseFloat(raw);if(!Number.isFinite(v))return;if(pd.min!==undefined)v=Math.max(pd.min,v);if(pd.max!==undefined)v=Math.min(pd.max,v);setParam(node.id,pd.key,v)});
+lab.appendChild(s);lab.appendChild(inp);frag.appendChild(lab)}
+function buildNode(n){
+const def=defOf(n);
+const el=document.createElement('div');
+el.className='node';el.dataset.id=n.id;
+el.style.cssText='left:'+n.x+'px;top:'+n.y+'px;width:'+def.w+'px;height:'+def.h+'px;';
+if(n.kind==='THRUSTER'){el.style.border='none';el.style.background='transparent'}
+else if(n.kind==='BUTTON'||n.kind==='ATT'||n.kind==='ALT'||n.kind==='SWITCH')el.style.border='none';
+if(n.kind==='BUTTON'){
+const base=document.createElement('div');base.className='bbase';el.appendChild(base);
+const dome=document.createElement('div');dome.className='dome '+(n.params.pressed>0.5?'on':'off');el.appendChild(dome);
+const hit=document.createElement('div');hit.className='domehit';hit.title='Button - toggles 0 / 1';
+hit.addEventListener('pointerdown',e=>e.stopPropagation());
+hit.addEventListener('click',e=>{e.stopPropagation();setParam(n.id,'pressed',(n.params.pressed??0)>0.5?0:1)});
+el.appendChild(hit)}
+else if(n.kind==='ATT'||n.kind==='ALT'){
+el.classList.add('sensor');
+const t=document.createElement('span');t.className='ntitle';t.textContent=def.title;el.appendChild(t)}
+else if(n.kind==='THRUSTER'){
+const fl=document.createElementNS('http://www.w3.org/2000/svg','svg');
+fl.setAttribute('class','flame');fl.setAttribute('viewBox','0 0 72 66');
+const g=svgEl('g',{class:'fl'});
+const p1=svgEl('path',{d:'M4 6 C 4 30 16 54 36 65 C 56 54 68 30 68 6 C 47 1 25 1 4 6 Z',fill:'#f6a623'});
+const p2=svgEl('path',{d:'M14 8 C 14 28 23 46 36 55 C 49 46 58 28 58 8 C 43 4 29 4 14 8 Z',fill:'#ffd24a'});
+g.appendChild(p1);g.appendChild(p2);fl.appendChild(g);el.appendChild(fl);
+const body=document.createElement('div');body.className='tbody';el.appendChild(body);
+const pct=document.createElement('div');pct.className='tpct';pct.dataset.tpct=n.id;el.appendChild(pct)}
+else if(n.kind==='SWITCH'){
+const fr=document.createElement('div');fr.className='swframe';el.appendChild(fr);
+const pn=document.createElement('div');pn.className='swpanel';el.appendChild(pn);
+const kn=document.createElement('div');kn.className='swknob';kn.style.top=n.params.on>0.5?'34px':'134px';el.appendChild(kn);
+const tr=document.createElement('div');tr.className='swtri';el.appendChild(tr);
+const hit=document.createElement('div');hit.className='swhit';hit.title='Switch - flips ON / OFF';
+hit.addEventListener('pointerdown',e=>e.stopPropagation());
+hit.addEventListener('click',e=>{e.stopPropagation();setParam(n.id,'on',(n.params.on??0)>0.5?0:1)});
+el.appendChild(hit)}
+else{
+const head=document.createElement('div');
+head.className='ntitle';
+head.textContent=def.title;
+head.style.cssText=def.tc?'text-align:center;padding:6px 12px 0':'padding:6px 12px 0';
+if(n.kind==='CONST'){
+head.textContent='';
+head.style.cssText='display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 12px 4px';
+const sp=document.createElement('span');sp.textContent='CONST';head.appendChild(sp);
+const inp=document.createElement('input');inp.type='number';inp.step=0.01;inp.className='num';inp.value=String(n.params.value??0);
+inp.addEventListener('pointerdown',e=>e.stopPropagation());
+inp.addEventListener('input',()=>{let v=parseFloat(inp.value);if(!Number.isFinite(v))v=0;setParam(n.id,'value',clamp(v,-1,1))});
+head.appendChild(inp);
+el.appendChild(head);
+const tr=document.createElement('div');tr.className='ctrack';tr.dataset.nodrag='1';
+tr.innerHTML='<span class="lab" style="left:6px">-1</span><span class="lab" style="right:6px">1</span><div class="rail"></div><div class="knob"></div>';
+const setFrom=e=>{const r=tr.getBoundingClientRect();const pct=clamp((e.clientX-r.left-22)/Math.max(1,r.width-44),0,1);setParam(n.id,'value',Math.round((pct*2-1)*100)/100)};
+let sd=false;
+tr.addEventListener('pointerdown',e=>{e.stopPropagation();sd=true;tr.setPointerCapture(e.pointerId);setFrom(e)});
+tr.addEventListener('pointermove',e=>{if(sd)setFrom(e)});
+tr.addEventListener('pointerup',()=>sd=false);
+tr.addEventListener('pointercancel',()=>sd=false);
+const knob=tr.querySelector('.knob');
+const updknob=()=>{const pct=(clamp(n.params.value??0,-1,1)+1)/2;knob.style.left='calc(22px + '+pct+' * (100% - 44px))'};
+tr._upd=updknob;updknob();
+el.appendChild(tr)}
+else{
+el.appendChild(head);
+if(def.params.length){
+const row=document.createElement('div');row.className='prow';row.dataset.nodrag='1';
+for(const pd of def.params)buildNum(n,pd,row);
+el.appendChild(row)}}}
+const frag=document.createDocumentFragment();
+buildPorts(n,def,frag);buildChips(n,def,frag);
+buildDel(frag,n.kind==='THRUSTER'?33:-9,n.kind==='THRUSTER'?16:-9);
+el.appendChild(frag);
+el.addEventListener('pointerdown',e=>{
+if(e.target.closest('[data-port]')||e.target.closest('[data-nodrag]'))return;
+select({type:'node',id:n.id});
+drag={mode:'node',id:n.id,ox:worldPt(e).x-n.x,oy:worldPt(e).y-n.y};
+e.stopPropagation()});
+world.appendChild(el);
+return el}
+function renderNodes(){
+for(const[id,el]of nodeEls){if(!nodes.find(n=>n.id===id)){el.remove();nodeEls.delete(id)}}
+for(const n of nodes){
+let el=nodeEls.get(n.id);
+if(!el){el=buildNode(n);nodeEls.set(n.id,el)}
+el.style.zIndex=sel&&sel.type==='node'&&sel.id===n.id?20:10;
+el.classList.toggle('sel',!!(sel&&sel.type==='node'&&sel.id===n.id));
+for(const pe of el.querySelectorAll('[data-port]')){
+const wdir=drag&&drag.mode==='wire'?drag.from.dir:null;
+pe.style.boxShadow=wdir&&wdir!==pe.dataset.dir?'0 0 0 2.5px #101010':''}}}
+function renderWires(){
+wireG.innerHTML='';
+wireEls.clear();
+for(const w of wires){
+const a=portPos(nodes.find(n=>n.id===w.fromNode),w.fromPort);
+const b=portPos(nodes.find(n=>n.id===w.toNode),w.toPort);
+if(!a||!b)continue;
+const d=wirePath(a,b);
+const vis=svgEl('path',{d,class:'wire'+(sel&&sel.type==='wire'&&sel.id===w.id?' sel':'')});
+const hit=svgEl('path',{d,class:'hit'});
+hit.dataset.wire=w.id;
+hit.addEventListener('pointerdown',e=>{
+e.stopPropagation();
+const under=document.elementsFromPoint(e.clientX,e.clientY);
+const pe=under.map(el=>el.closest?el.closest('[data-port]'):null).find(Boolean);
+if(pe){beginPortDrag(pe);return}
+if(sel&&sel.type==='wire'&&sel.id===w.id){deleteWire(w.id);return}
+select({type:'wire',id:w.id})});
+wireG.appendChild(vis);wireG.appendChild(hit);
+wireEls.set(w.id,vis)}
+if(tempPath){wireG.appendChild(tempPath);tempPath.setAttribute('display','none')}}
+function updateWire(id){
+const el=wireEls.get(id);if(!el)return;
+const w=wires.find(x=>x.id===id);if(!w){el.remove();wireEls.delete(id);return}
+const a=portPos(nodes.find(n=>n.id===w.fromNode),w.fromPort);
+const b=portPos(nodes.find(n=>n.id===w.toNode),w.toPort);
+if(a&&b)el.setAttribute('d',wirePath(a,b))}
+function updateWiresFor(nodeId){
+for(const w of wires)if(w.fromNode===nodeId||w.toNode===nodeId)updateWire(w.id)}
+function applyView(){
+world.style.transform='translate('+view.x+'px,'+view.y+'px) scale('+view.k+')';
+wireG.setAttribute('transform','translate('+view.x+' '+view.y+') scale('+view.k+')');
+cv.style.backgroundSize=(22*view.k)+'px '+(22*view.k)+'px';
+cv.style.backgroundPosition=view.x+'px '+view.y+'px'}
+function worldPt(e){const r=cv.getBoundingClientRect();return{x:(e.clientX-r.left-view.x)/view.k,y:(e.clientY-r.top-view.y)/view.k}}
+function select(s){sel=s;renderNodes();renderWires();renderShapes()}
+function setParam(id,key,v){
+const n=nodes.find(m=>m.id===id);if(!n)return;
+n.params[key]=v;
+scheduleSave();
+const el=nodeEls.get(id);
+if(el){
+if(n.kind==='BUTTON'){
+const dome=el.querySelector('.dome');if(dome)dome.className='dome '+(v>0.5?'on':'off')}
+if(n.kind==='SWITCH'){
+const kn=el.querySelector('.swknob');if(kn)kn.style.top=v>0.5?'34px':'134px'}
+if(n.kind==='CONST'){
+const tr=el.querySelector('.ctrack');if(tr&&tr._upd)tr._upd()}}}
+function deleteNode(id){
+nodes=nodes.filter(n=>n.id!==id);
+wires=wires.filter(w=>w.fromNode!==id&&w.toNode!==id);
+if(sel&&sel.type==='node'&&sel.id===id)sel=null;
+delete env[id];delete pidState[id];delete memState[id];
+renderAll();scheduleSave();toast('Deleted')}
+function deleteWire(id){
+wires=wires.filter(w=>w.id!==id);
+if(sel&&sel.type==='wire'&&sel.id===id)sel=null;
+renderWires();renderNodes();scheduleSave();toast('Wire removed')}
+const SHAPE_KINDS=['SQUARE','GRAY','BLACK'];
+const SHAPE_FILL={white:'#ffffff',gray:'#ababab',black:'#101010'};
+function sanitizeShapes(raw){if(!Array.isArray(raw))return[];const out=[];for(const r of raw){if(!r||typeof r!=='object'||typeof r.id!=='string')continue;const color=r.color==='gray'||r.color==='black'?r.color:'white';out.push({id:r.id,color,x:typeof r.x==='number'&&Number.isFinite(r.x)?r.x:0,y:typeof r.y==='number'&&Number.isFinite(r.y)?r.y:0,w:typeof r.w==='number'&&Number.isFinite(r.w)?Math.max(20,r.w):120,h:typeof r.h==='number'&&Number.isFinite(r.h)?Math.max(20,r.h):120})}return out}
+function addShape(color){
+const r=cv.getBoundingClientRect();
+const cx=(r.width/2-view.x)/view.k,cy=(r.height/2-view.y)/view.k;
+const j=(addCount++%7)*18-54;
+const s={id:uid(),color,x:Math.round(cx+j),y:Math.round(cy+j*0.6),w:120,h:120};
+shapes.push(s);
+renderShapes();
+select({type:'shape',id:s.id});
+scheduleSave();
+toast('Square added')}
+function buildShape(s){
+const el=document.createElement('div');
+el.className='shape';el.dataset.shape=s.id;
+el.style.cssText='left:'+s.x+'px;top:'+s.y+'px;width:'+s.w+'px;height:'+s.h+'px;background:'+SHAPE_FILL[s.color]+';'+(s.color==='black'?'':'border:2.5px solid #101010;');
+for(const c of['nw','ne','sw','se']){
+const h=document.createElement('div');h.className='shandle';h.dataset.h=c;
+h.style.cursor=(c==='nw'||c==='se')?'nwse-resize':'nesw-resize';
+h.style[c[1]==='w'?'left':'right']='-5px';
+h.style[c[0]==='n'?'top':'bottom']='-5px';
+el.appendChild(h)}
+const b=document.createElement('button');b.className='del';b.title='Delete';b.textContent='\u00d7';
+b.addEventListener('pointerdown',e=>e.stopPropagation());
+b.addEventListener('click',e=>{e.stopPropagation();deleteShape(s.id)});
+el.appendChild(b);
+el.addEventListener('pointerdown',e=>{
+if(e.target.closest('.del'))return;
+const hd=e.target.closest('.shandle');
+e.stopPropagation();
+select({type:'shape',id:s.id});
+if(hd){drag={mode:'shaperesize',id:s.id,corner:hd.dataset.h,st:worldPt(e),orig:{x:s.x,y:s.y,w:s.w,h:s.h}}}
+else{const p=worldPt(e);drag={mode:'shapemove',id:s.id,ox:p.x-s.x,oy:p.y-s.y}}});
+world.appendChild(el);
+return el}
+function renderShapes(){
+for(const[id,el]of shapeEls){if(!shapes.find(s=>s.id===id)){el.remove();shapeEls.delete(id)}}
+for(const s of shapes){
+let el=shapeEls.get(s.id);
+if(!el){el=buildShape(s);shapeEls.set(s.id,el)}
+el.classList.toggle('sel',!!(sel&&sel.type==='shape'&&sel.id===s.id))}}
+function deleteShape(id){
+shapes=shapes.filter(s=>s.id!==id);
+const el=shapeEls.get(id);if(el){el.remove();shapeEls.delete(id)}
+if(sel&&sel.type==='shape'&&sel.id===id)sel=null;
+renderShapes();scheduleSave();toast('Square removed')}
+function renderAll(){renderShapes();renderNodes();renderWires();applyView();buildPanel()}
+function addBlock(kind){
+const r=cv.getBoundingClientRect();
+const cx=(r.width/2-view.x)/view.k,cy=(r.height/2-view.y)/view.k;
+const j=(addCount++%7)*18-54;
+const n=createNode(kind,cx+j,cy+j*0.6);
+nodes.push(n);
+renderAll();
+select({type:'node',id:n.id});
+toast(kind+' added')}
+function buildPalette(){
+palEl.innerHTML='';
+for(const[sec,kinds]of PALETTE){
+const h=document.createElement('div');h.className='psec';h.textContent=sec;palEl.appendChild(h);
+for(const k of kinds){
+const it=document.createElement('div');it.className='pitem';it.title=k;
+const th=document.createElement('div');th.className='pthumb';
+if(k==='THRUSTER'){th.innerHTML='<svg viewBox="0 0 32 28" style="width:22px;height:19px"><path d="M12 17 C 12 23 16 27 16 27 C 16 27 20 23 20 17 Z" fill="#f6a623"/><rect x="9" y="2" width="14" height="16" rx="2.5" fill="#ababab"/></svg>'}
+else if(k==='SWITCH'){th.style.background='#8d8d8d';th.innerHTML='<span style="display:block;width:13px;height:13px;border-radius:50%;background:#e0473c"></span>'}
+else if(k==='STORE'){th.style.fontSize='7px';th.textContent='ST'}
+else if(k==='ATT'||k==='ALT'){th.style.background='#b13a2e';th.style.color='#fff';th.style.fontSize='6.5px';th.textContent=k}
+else if(k==='BUTTON'){th.style.background='#37a847';th.style.color='#fff';th.style.fontSize='6.5px';th.textContent='BTN'}
+else if(k==='SQUARE'){th.style.background='#fff'}
+else if(k==='GRAY'){th.style.background='#ababab'}
+else if(k==='BLACK'){th.style.background='#101010'}
+else{th.style.fontSize=(k.length>4?4.5:6.5)+'px';th.textContent=k}
+const txt=document.createElement('div');txt.className='ptxt';
+txt.innerHTML='<b>'+k+'</b><span>'+(SHAPE_KINDS.includes(k)?'SHAPE':BLOCKS[k].cat)+'</span>';
+it.appendChild(th);it.appendChild(txt);
+it.addEventListener('click',()=>SHAPE_KINDS.includes(k)?addShape(k==='BLACK'?'black':k==='GRAY'?'gray':'white'):addBlock(k));
+palEl.appendChild(it)}}}
+function buildPanel(){
+panel.innerHTML='';
+if(!simOn){panel.style.display='none';return}
+panel.style.display='block';
+const h=document.createElement('h3');
+h.innerHTML='<span>SIMULATION</span>';
+const ab=document.createElement('button');ab.className='tbtn'+(auto?' on':'');ab.style.height='22px';ab.style.fontSize='8px';ab.textContent='AUTO SWEEP';
+ab.addEventListener('click',()=>{auto=!auto;buildPanel()});
+h.appendChild(ab);panel.appendChild(h);
+for(const n of nodes){
+if(n.kind==='ATT'){
+const t=document.createElement('div');t.className='snode';t.textContent='ATT';panel.appendChild(t);
+for(const[key,label]of[['yaw','YAW'],['pitch','PITCH'],['roll','ROLL']])envRow(n.id,key,label,-1,1,t);
+panel.appendChild(t)}
+if(n.kind==='ALT'){
+const t=document.createElement('div');t.className='snode';t.textContent='ALT';panel.appendChild(t);
+envRow(n.id,'alt','ALT',0,100,t);
+panel.appendChild(t)}
+if(n.kind==='THRUSTER'){
+const t=document.createElement('div');t.className='snode';t.textContent='THRUSTER';panel.appendChild(t);
+const row=document.createElement('div');row.className='srow';
+const lab=document.createElement('span');lab.textContent='%';
+const bar=document.createElement('div');bar.className='tbar';
+const fill=document.createElement('i');fill.dataset.tbar=n.id;bar.appendChild(fill);
+const val=document.createElement('span');val.className='sv';val.dataset.tval=n.id;val.textContent='0';
+row.appendChild(lab);row.appendChild(bar);row.appendChild(val);
+t.appendChild(row);panel.appendChild(t)}}}
+function envRow(nid,key,label,min,max,parent){
+const row=document.createElement('div');row.className='srow';
+const lab=document.createElement('span');lab.style.width='30px';lab.textContent=label;
+const sl=document.createElement('input');sl.type='range';sl.className='sl';sl.min=min;sl.max=max;sl.step=0.01;sl.disabled=auto;sl.dataset.env=nid+'|'+key;
+if(!auto)sl.value=(env[nid]||{})[key]??(key==='alt'?10:0);
+sl.addEventListener('input',()=>{if(!env[nid])env[nid]={yaw:0,pitch:0,roll:0,alt:10};env[nid][key]=parseFloat(sl.value)});
+const sv=document.createElement('span');sv.className='sv';sv.dataset.envv=nid+'|'+key;sv.textContent='0';
+row.appendChild(lab);row.appendChild(sl);row.appendChild(sv);parent.appendChild(row)}
+function startSim(){
+if(simOn)return;simOn=true;time=0;pidState={};memState={};prevOuts=new Map();
+for(const n of nodes)if(!env[n.id])env[n.id]={yaw:0,pitch:0,roll:0,alt:10};
+$('simBtn').classList.add('on');
+$('simBtn').innerHTML='<span class="ic">&#9632;</span>STOP';
+buildPanel();
+simTimer=setInterval(()=>{
+time+=0.016;
+const r=stepSim();
+outs=r.out;inVals=r.inV;prevOuts=outs;
+updateSimDom();
+},16);
+toast('Simulation running')}
+function stopSim(){
+if(!simOn)return;simOn=false;
+clearInterval(simTimer);simTimer=null;
+outs=new Map();inVals=new Map();prevOuts=new Map();
+$('simBtn').classList.remove('on');
+$('simBtn').innerHTML='<span class="ic">&#9654;</span>SIMULATE';
+for(const el of nodeEls.values()){
+for(const c of el.querySelectorAll('[data-chip],[data-chipin]'))c.style.display='none';
+const fl=el.querySelector('.flame');if(fl)fl.style.display='none';
+const pc=el.querySelector('[data-tpct]');if(pc)pc.style.display='none'}
+buildPanel();
+toast('Simulation stopped')}
+function updateSimDom(){
+for(const el of nodeEls.values()){
+for(const c of el.querySelectorAll('[data-chip]')){
+const v=outs.get(c.dataset.chip);
+if(v===undefined){c.style.display='none'}else{c.style.display='block';c.textContent=fmt(v)}}
+for(const c of el.querySelectorAll('[data-chipin]')){
+const v=inVals.get(c.dataset.chipin);
+if(v===undefined){c.style.display='none'}else{c.style.display='block';c.textContent=fmt(v)}}
+const pid=el.dataset.id;
+const fl=el.querySelector('.flame');
+if(fl){
+const n=nodes.find(m=>m.id===pid);
+if(simOn&&n&&n.kind==='THRUSTER'){
+const t=clamp(outs.get(pid+'|__thrust')??0,0,1);
+const gx=outs.get(pid+'|__gx')??0,gy=outs.get(pid+'|__gy')??0;
+if(t<=0.01){fl.style.display='none'}
+else{
+fl.style.display='block';
+const rot=clamp(gx-gy,-1,1)*-22;
+fl.style.transform='rotate('+rot+'deg) scale('+(0.55+0.45*t)+')'}}
+else fl.style.display='none'}
+const pct=el.querySelector('[data-tpct]');
+if(pct){
+const t=clamp(outs.get(pid+'|__thrust')??0,0,1);
+pct.style.display=simOn&&t>0?'block':'none';
+pct.textContent=Math.round(t*100)+'%'}}
+if(simOn){
+for(const sl of panel.querySelectorAll('[data-env]')){
+const[nid,key]=sl.dataset.env.split('|');
+const e=auto?null:env[nid];
+if(!auto&&e)sl.value=e[key]??0;
+sl.disabled=auto}
+for(const sv of panel.querySelectorAll('[data-envv]')){
+const[nid,key]=sv.dataset.envv.split('|');
+const v=auto?outs.get(nid+'|'+key.toUpperCase()):((env[nid]||{})[key]);
+sv.textContent=fmt(v===undefined?0:v)}
+for(const bar of panel.querySelectorAll('[data-tbar]')){
+const t=clamp(outs.get(bar.dataset.tbar+'|__thrust')??0,0,1);
+bar.style.width=Math.round(t*100)+'%'}
+for(const tv of panel.querySelectorAll('[data-tval]')){
+const t=clamp(outs.get(tv.dataset.tval+'|__thrust')??0,0,1);
+tv.textContent=Math.round(t*100)+'%'}}}
+function scheduleSave(){
+clearTimeout(scheduleSave._h);
+scheduleSave._h=setTimeout(()=>{try{localStorage.setItem(AUTOKEY,JSON.stringify({version:1,nodes,wires,shapes}))}catch(e){}},500)}
+function loadGraph(g,quiet){
+nodes=sanitizeNodes(g.nodes);
+wires=sanitizeWires(g.wires,nodes);
+shapes=sanitizeShapes(g.shapes);
+sel=null;env={};pidState={};memState={};
+renderAll();
+if(!quiet)toast('Loaded')}
+function exportJson(){
+const blob=new Blob([JSON.stringify({version:1,nodes,wires,shapes},null,2)],{type:'application/json'});
+const a=document.createElement('a');
+a.href=URL.createObjectURL(blob);
+a.download='logic-planner-graph.json';
+a.click();
+URL.revokeObjectURL(a.href);
+toast('Exported')}
+function fitView(){
+if(!nodes.length&&!shapes.length)return;
+let x1=1e9,y1=1e9,x2=-1e9,y2=-1e9;
+for(const n of nodes){const d=defOf(n);x1=Math.min(x1,n.x);y1=Math.min(y1,n.y);x2=Math.max(x2,n.x+d.w);y2=Math.max(y2,n.y+d.h)}
+for(const s of shapes){x1=Math.min(x1,s.x);y1=Math.min(y1,s.y);x2=Math.max(x2,s.x+s.w);y2=Math.max(y2,s.y+s.h)}
+const r=cv.getBoundingClientRect();
+const pad=70;
+const k=clamp(Math.min((r.width-pad*2)/Math.max(1,x2-x1),(r.height-pad*2)/Math.max(1,y2-y1)),0.35,2.2);
+view.k=k;
+view.x=(r.width-(x2-x1)*k)/2-x1*k;
+view.y=(r.height-(y2-y1)*k)/2-y1*k;
+applyView()}
+function zoomAt(cx,cy,factor){
+const k2=clamp(view.k*factor,0.35,2.2);
+const r=cv.getBoundingClientRect();
+const px=cx-r.left,py=cy-r.top;
+view.x=px-(px-view.x)*(k2/view.k);
+view.y=py-(py-view.y)*(k2/view.k);
+view.k=k2;
+applyView()}
+function beginPortDrag(portEl){
+const nid=portEl.dataset.node,pid=portEl.dataset.port,dir=portEl.dataset.dir;
+drag={mode:'wire',from:{node:nid,port:pid,dir}};
+tempPath=svgEl('path',{class:'temp'});
+tempPath.setAttribute('display','none');
+wireG.appendChild(tempPath);
+wiresSvg.classList.add('nohit');
+renderNodes()}
+cv.addEventListener('pointerdown',e=>{
+if(e.button===2)return;
+closePal();
+const portEl=e.target.closest('[data-port]');
+if(portEl){beginPortDrag(portEl);return}
+drag={mode:'pan',sx:e.clientX,sy:e.clientY,vx:view.x,vy:view.y,moved:false};
+cv.classList.add('panning');
+if(sel){sel=null;renderNodes();renderWires()}});
+window.addEventListener('pointermove',e=>{
+if(!drag)return;
+if(drag.mode==='pan'){
+const dx=e.clientX-drag.sx,dy=e.clientY-drag.sy;
+if(Math.abs(dx)>2||Math.abs(dy)>2)drag.moved=true;
+view.x=drag.vx+dx;view.y=drag.vy+dy;
+applyView()}
+else if(drag.mode==='node'){
+const n=nodes.find(m=>m.id===drag.id);if(!n)return;
+const p=worldPt(e);
+n.x=Math.round(p.x-drag.ox);n.y=Math.round(p.y-drag.oy);
+const el=nodeEls.get(n.id);
+if(el){el.style.left=n.x+'px';el.style.top=n.y+'px'}
+updateWiresFor(n.id);
+scheduleSave()}
+else if(drag.mode==='shapemove'||drag.mode==='shaperesize'){
+const p=worldPt(e);
+const s=shapes.find(m=>m.id===drag.id);
+if(s){
+const se=shapeEls.get(s.id);
+if(drag.mode==='shapemove'){
+s.x=Math.round(p.x-drag.ox);s.y=Math.round(p.y-drag.oy);
+if(se){se.style.left=s.x+'px';se.style.top=s.y+'px'}}
+else{
+const dx=p.x-drag.st.x,dy=p.y-drag.st.y;
+let x=drag.orig.x,y=drag.orig.y,w=drag.orig.w,h=drag.orig.h;
+if(drag.corner.includes('e'))w=drag.orig.w+dx;
+if(drag.corner.includes('s'))h=drag.orig.h+dy;
+if(drag.corner.includes('w')){w=drag.orig.w-dx;x=drag.orig.x+dx}
+if(drag.corner.includes('n')){h=drag.orig.h-dy;y=drag.orig.y+dy}
+if(w<20){if(drag.corner.includes('w'))x+=20-w;w=20}
+if(h<20){if(drag.corner.includes('n'))y+=20-h;h=20}
+s.x=Math.round(x);s.y=Math.round(y);s.w=Math.round(w);s.h=Math.round(h);
+if(se){se.style.left=s.x+'px';se.style.top=s.y+'px';se.style.width=s.w+'px';se.style.height=s.h+'px'}}
+scheduleSave()}}
+else if(drag.mode==='wire'){
+const p=worldPt(e);
+const n0=nodes.find(m=>m.id===drag.from.node);
+const a=portPos(n0,drag.from.port);
+if(a&&tempPath){
+tempPath.removeAttribute('display');
+tempPath.setAttribute('d',wirePath(a,p))}}});
+window.addEventListener('pointerup',e=>{
+if(!drag)return;
+wiresSvg.classList.remove('nohit');
+if(drag.mode==='pan'){cv.classList.remove('panning')}
+else if(drag.mode==='wire'){
+const under=document.elementsFromPoint(e.clientX,e.clientY);
+const portEl=under.map(el=>el.closest?el.closest('[data-port]'):null).find(Boolean);
+if(portEl&&tempPath){
+const nid=portEl.dataset.node,pid=portEl.dataset.port,dir=portEl.dataset.dir;
+const f=drag.from;
+if(dir!==f.dir&&nid!==f.node){
+let fromNode,fromPort,toNode,toPort;
+if(f.dir==='out'){fromNode=f.node;fromPort=f.port;toNode=nid;toPort=pid}
+else{fromNode=nid;fromPort=pid;toNode=f.node;toPort=f.port}
+const exists=wires.some(w=>w.fromNode===fromNode&&w.fromPort===fromPort&&w.toNode===toNode&&w.toPort===toPort);
+if(exists)toast('Already wired');
+else{
+wires.push({id:uid(),fromNode,fromPort,toNode,toPort});
+renderWires();renderNodes();scheduleSave();toast('Connected')}}}
+if(tempPath){tempPath.remove();tempPath=null}
+renderNodes()}
+drag=null});
+cv.addEventListener('wheel',e=>{
+e.preventDefault();
+zoomAt(e.clientX,e.clientY,e.deltaY<0?1.12:1/1.12)},{passive:false});
+window.addEventListener('keydown',e=>{
+if(e.key==='Delete'||e.key==='Backspace'){
+const a=document.activeElement;
+if(a&&(a.tagName==='INPUT'||a.tagName==='TEXTAREA'))return;
+if(!sel)return;
+e.preventDefault();
+if(sel.type==='node')deleteNode(sel.id);
+else if(sel.type==='shape')deleteShape(sel.id);
+else deleteWire(sel.id)}});
+$('simBtn').addEventListener('click',()=>simOn?stopSim():startSim());
+$('saveBtn').addEventListener('click',()=>{try{localStorage.setItem(SAVEKEY,JSON.stringify({version:1,nodes,wires,shapes}));toast('Saved')}catch(e){toast('Save failed')}});
+$('loadBtn').addEventListener('click',()=>{try{const raw=localStorage.getItem(SAVEKEY)||localStorage.getItem(AUTOKEY);if(!raw){toast('Nothing saved yet');return}loadGraph(JSON.parse(raw));toast('Loaded')}catch(e){toast('Load failed')}});
+$('exportBtn').addEventListener('click',exportJson);
+$('importBtn').addEventListener('click',()=>$('fileIn').click());
+$('fileIn').addEventListener('change',e=>{
+const f=e.target.files[0];if(!f)return;
+const rd=new FileReader();
+rd.onload=()=>{try{loadGraph(JSON.parse(rd.result));toast('Imported')}catch(err){toast('Invalid file')}};
+rd.readAsText(f);
+e.target.value=''});
+$('clearBtn').addEventListener('click',()=>{
+if(!nodes.length&&!shapes.length)return;
+if(!confirm('Clear all the logic? I mean i guess thats why you pressed this button but just think about it!'))return;
+nodes=[];wires=[];shapes=[];sel=null;env={};pidState={};memState={};
+if(simOn)stopSim();
+renderAll();scheduleSave();toast('Cleared')});
+$('zoomIn').addEventListener('click',()=>{const r=cv.getBoundingClientRect();zoomAt(r.left+r.width/2,r.top+r.height/2,1.2)});
+$('zoomOut').addEventListener('click',()=>{const r=cv.getBoundingClientRect();zoomAt(r.left+r.width/2,r.top+r.height/2,1/1.2)});
+$('fitBtn').addEventListener('click',fitView);
+$('palBtn').addEventListener('click',()=>document.body.classList.toggle('pal'));
+function closePal(){document.body.classList.remove('pal')}
+window.addEventListener('resize',applyView);
+buildPalette();
+(function init(){
+let g=null;
+try{const raw=localStorage.getItem(AUTOKEY);if(raw)g=JSON.parse(raw)}catch(e){}
+if(!g||!g.nodes||!g.nodes.length)g=demoGraph();
+nodes=sanitizeNodes(g.nodes);
+wires=sanitizeWires(g.wires,nodes);
+shapes=sanitizeShapes(g.shapes);
+renderAll()})();
+</script>
+<script>
+const SITE_META={
+CONST:{cat:'INPUT',th:'C',t:'A fixed number',d:'Outputs a constant value you pick on the slider, anywhere from -1 to 1. The starting point for setpoints, offsets and quick tests.',ins:[],outs:[['OUT','The value you set, every single tick']],prm:[['VALUE','The slider value, from -1 to 1']],use:'Wire it into a PID target, or straight into a thruster for a fixed burn.'},
+BUTTON:{cat:'INPUT',th:'B',t:'A manual on / off',d:'Click the green dome to toggle between 0 and 1. It stays where you leave it, so it works like a latching switch you drive by hand.',ins:[],outs:[['OUT','1 while the dome is on, 0 while it is off']],prm:[],use:'Wire it into a thruster to test thrust, or into the Store input of STORE to capture a value on demand.'},
+SWITCH:{cat:'INPUT',th:'SW',t:'A physical toggle switch',d:'Flip the red knob up or down. The top OUT carries 1 when the switch is up and 0 when it is down. The bottom OUT always carries the opposite, so one block gives you the state and its inverse.',ins:[],outs:[['OUT (top)','1 when the knob is up'],['OUT (bottom)','1 when the knob is down']],prm:[],use:'Use the top OUT to arm a system and the bottom OUT to drive the fallback path at the same time.'},
+PID:{cat:'LOGIC',th:'PID',t:'Steers towards a target',d:'Compares TARGET with CURRENT and outputs how hard to push to close the gap. P reacts to the error right now, I adds up error over time, D smooths out fast changes. Most hover setups live on P alone.',ins:[['TARGET','Where you want to be'],['CURRENT','Where you actually are']],outs:[['OUT','The correction, feed it into thrusters or math']],prm:[['P','Strength of the push, start around 1 or 2'],['I','Fixes small standing errors over time'],['D','Dampens overshoot']],use:'ALT into CURRENT, your chosen height into TARGET, OUT into a thruster. That is a height hold.'},
+STORE:{cat:'LOGIC',th:'ST',t:'Remembers a value',d:'While the Store input is on (1 or more), whatever comes into Value gets saved into memory. The Stored output gives back the saved number, even after Store turns off. Nothing changes until you trigger Store again.',ins:[['Value','The number you want to keep'],['Store','While this is 1, Value is saved into memory']],outs:[['Stored','The value currently in memory']],prm:[],use:'Button into Store, ALT into Value: click once and your current altitude is locked in as the target for a PID. That is how you set a hover height in flight.'},
+ADD:{cat:'MATH',th:'+',t:'A + B',d:'Adds the two inputs together and outputs the sum.',ins:[['A','First number'],['B','Second number']],outs:[['OUT','A + B']],prm:[],use:'Combine a base throttle with a PID correction.'},
+SUB:{cat:'MATH',th:'-',t:'A - B',d:'Subtracts B from A and outputs the difference.',ins:[['A','First number'],['B','Subtracted from A']],outs:[['OUT','A - B']],prm:[],use:'Compare two sensors, or trim a signal down.'},
+MUL:{cat:'MATH',th:'\u00d7',t:'A \u00d7 B',d:'Multiplies the two inputs together.',ins:[['A','First number'],['B','Second number']],outs:[['OUT','A \u00d7 B']],prm:[],use:'Scale a sensor range down: ALT (0 to 100) times 0.01 gives 0 to 1.'},
+DIV:{cat:'MATH',th:'\u00f7',t:'A \u00f7 B',d:'Divides A by B. If B is 0 the output is 0, so it never blows up.',ins:[['A','Dividend'],['B','Divisor']],outs:[['OUT','A \u00f7 B']],prm:[],use:'Turn one signal into a fraction of another.'},
+MIN:{cat:'MATH',th:'MIN',t:'The smaller one',d:'Outputs whichever input is lower right now. A soft floor for signals.',ins:[['A','First number'],['B','Second number']],outs:[['OUT','Whichever is smaller']],prm:[],use:'Cap thrust from below without a CLAMP box.'},
+MAX:{cat:'MATH',th:'MAX',t:'The bigger one',d:'Outputs whichever input is higher right now. A soft ceiling for signals.',ins:[['A','First number'],['B','Second number']],outs:[['OUT','Whichever is bigger']],prm:[],use:'Keep a minimum idle thrust no matter what the PID says.'},
+INVERT:{cat:'MATH',th:'\u00b1',t:'Flips the sign',d:'0.5 becomes -0.5 and -1 becomes 1.',ins:[['IN','Any signal']],outs:[['OUT','The same value, negated']],prm:[],use:'Drive two thrusters in opposite directions from one sensor.'},
+ABS:{cat:'MATH',th:'|X|',t:'Drops the minus',d:'Negative becomes positive, positive stays as it is.',ins:[['IN','Any signal']],outs:[['OUT','The size of the value, always positive']],prm:[],use:'React to tilt amount when direction does not matter.'},
+CLAMP:{cat:'MATH',th:'><',t:'Keeps it in range',d:'Lets the input through but holds it between the MIN and MAX you set. The safety net that keeps thrusters fed with 0 to 1.',ins:[['IN','Any signal']],outs:[['OUT','The input, limited to your range']],prm:[['MIN','Lowest allowed value'],['MAX','Highest allowed value']],use:'Put it before a thruster so a runaway PID can never demand more than full power.'},
+ATT:{cat:'SENSORS',th:'ATT',t:'Knows your rotation',d:'Outputs the craft rotation as three signals, each from -1 to 1: YAW (left / right), PITCH (nose up / down) and ROLL (tilt). In the simulator they sweep on their own; in the game they read the real gyro.',ins:[],outs:[['YAW','Left / right rotation, -1 to 1'],['PITCH','Nose up / down, -1 to 1'],['ROLL','Tilt, -1 to 1']],prm:[],use:'ROLL into a PID CURRENT, 0 into TARGET, and the output levels you out.'},
+ALT:{cat:'SENSORS',th:'ALT',t:'How high you are',d:'Outputs altitude from 0 to 100. In the simulator it sweeps up and down on its own; in the game it reads the real altimeter.',ins:[],outs:[['ALT','Altitude, 0 to 100']],prm:[],use:'Times 0.01 it becomes a 0 to 1 signal. Into a PID CURRENT it becomes a height hold.'},
+THRUSTER:{cat:'OUTPUT',th:'THR',t:'The engine',d:'Burns according to THROTTLE from 0 to 1. X and Y are optional gimbal inputs that tilt the thrust for steering. Any input you leave unwired counts as 0.',ins:[['THROTTLE','Power, 0 to 1'],['X','Optional gimbal, -1 to 1'],['Y','Optional gimbal, -1 to 1']],outs:[],prm:[],use:'PID OUT into THROTTLE. Only wire X or Y if you want vector steering.'}};
+const CATS=['ALL','INPUT','MATH','LOGIC','SENSORS','OUTPUT'];
+let curCat='ALL';
+const siteSide=document.getElementById('sside'),siteGrid=document.getElementById('sgrid'),siteDetail=document.getElementById('sdetail'),siteCount=document.getElementById('scount');
+function catCount(c){return c==='ALL'?Object.keys(SITE_META).length:Object.keys(SITE_META).filter(k=>SITE_META[k].cat===c).length}
+function buildSide(){
+siteSide.querySelectorAll('.scat').forEach(e=>e.remove());
+for(const c of CATS){
+const el=document.createElement('div');
+el.className='scat'+(c===curCat?' act':'');
+el.innerHTML='<b>'+c+'</b><span>'+catCount(c)+'</span>';
+el.addEventListener('click',()=>{curCat=c;buildSide();renderGrid();location.hash='#blocks'});
+siteSide.appendChild(el)}}
+function renderGrid(){
+siteDetail.style.display='none';
+siteGrid.style.display='grid';
+siteGrid.innerHTML='';
+const ks=Object.keys(SITE_META).filter(k=>curCat==='ALL'||SITE_META[k].cat===curCat);
+siteCount.textContent=ks.length+(ks.length===1?' BLOCK':' BLOCKS');
+for(const k of ks){
+const m=SITE_META[k];
+const card=document.createElement('div');
+card.className='scard';
+card.innerHTML='<div class="chead"><div class="cthumb">'+m.th+'</div><div class="scat2">'+m.cat+'</div></div><div class="cname">'+k+'</div><div class="cdesc">'+m.t+'. '+m.d.split('.')[0]+'.</div><div class="cfoot">IN '+(m.ins.length?m.ins.length:'-')+' \u00b7 OUT '+(m.outs.length?m.outs.length:'-')+(m.prm.length?' \u00b7 '+m.prm.length+' SETTING'+(m.prm.length>1?'S':''):'')+'</div>';
+card.addEventListener('click',()=>{location.hash='#block/'+k});
+siteGrid.appendChild(card)}}
+function renderDetail(k){
+const m=SITE_META[k];
+siteGrid.style.display='none';
+siteDetail.style.display='block';
+let h='<a class="dback" href="#blocks">\u2190 ALL BLOCKS</a>';
+h+='<div class="dtitle">'+k+'</div><div class="dcat">'+m.cat+'</div>';
+h+='<p class="ddesc">'+m.d+'</p>';
+if(m.ins.length){h+='<div class="dsec">INPUTS</div>';for(const[n,d]of m.ins)h+='<div class="drow"><div class="dtag">IN</div><b>'+n+'</b><span>'+d+'</span></div>'}
+if(m.outs.length){h+='<div class="dsec">OUTPUTS</div>';for(const[n,d]of m.outs)h+='<div class="drow"><div class="dtag">OUT</div><b>'+n+'</b><span>'+d+'</span></div>'}
+if(m.prm.length){h+='<div class="dsec">SETTINGS</div>';for(const[n,d]of m.prm)h+='<div class="drow"><div class="dtag">SET</div><b>'+n+'</b><span>'+d+'</span></div>'}
+h+='<div class="dsec">HOW IT IS USED</div><p class="duse">'+m.use+'</p>';
+siteDetail.innerHTML=h}
+function route(){
+const h=location.hash;
+document.body.dataset.view=h==='#planner'?'planner':'site';
+document.querySelectorAll('.slink').forEach(a=>a.classList.toggle('act',h!=='#planner'&&a.dataset.nav==='blocks'));
+if(h==='#planner'){
+if(!route._f){route._f=1;requestAnimationFrame(()=>{fitView();toast('Click a block on the left to add it')})}
+return}
+const mb=h.match(/^#block\/([A-Z]+)$/);
+if(mb&&SITE_META[mb[1]]){renderDetail(mb[1]);return}
+renderGrid()}
+window.addEventListener('hashchange',route);
+document.getElementById('backBtn').addEventListener('click',()=>{location.hash='#blocks'});
+buildSide();
+route();
+</script>
+</body>
+</html>
