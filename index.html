@@ -9,6 +9,8 @@ lunch(vibecoder btw)
 
 Changelog:
 
+NotZeri: Fixed Blocks offseting after saving
+NotZeri: Fixed Wires breaking after save then moving it and loading it back in
 NotZeri: Added da switch
 NotZeri: Added shapes
 NotZeri: Added abs, button, store. Updated ui(lunch you lie about making ui from scratch)
@@ -18,6 +20,8 @@ lunch: Made from scratch ui(starting blocks: const pid mul add sub div invert mi
 
 Dev talk:
 
+NotZeri: Shut up you would have done that too
+lunch: you fucking suck you overcomplicated that
 NotZeri: why didn't you just directly copy it instead of using python
 lunch: copying to github problem
 NotZeri: why is the code all like no spaces at all
@@ -670,7 +674,7 @@ const base=document.createElement('div');base.className='bbase';el.appendChild(b
 const dome=document.createElement('div');dome.className='dome '+(n.params.pressed>0.5?'on':'off');el.appendChild(dome);
 const hit=document.createElement('div');hit.className='domehit';hit.title='Button - toggles 0 / 1';
 hit.addEventListener('pointerdown',e=>e.stopPropagation());
-hit.addEventListener('click',e=>{e.stopPropagation();setParam(n.id,'pressed',(n.params.pressed??0)>0.5?0:1)});
+hit.addEventListener('click',e=>{e.stopPropagation();const cur=nodes.find(m=>m.id===n.id)||n;setParam(n.id,'pressed',(cur.params.pressed??0)>0.5?0:1)});
 el.appendChild(hit)}
 else if(n.kind==='ATT'||n.kind==='ALT'){
 el.classList.add('sensor');
@@ -691,7 +695,7 @@ const kn=document.createElement('div');kn.className='swknob';kn.style.top=n.para
 const tr=document.createElement('div');tr.className='swtri';el.appendChild(tr);
 const hit=document.createElement('div');hit.className='swhit';hit.title='Switch - flips ON / OFF';
 hit.addEventListener('pointerdown',e=>e.stopPropagation());
-hit.addEventListener('click',e=>{e.stopPropagation();setParam(n.id,'on',(n.params.on??0)>0.5?0:1)});
+hit.addEventListener('click',e=>{e.stopPropagation();const cur=nodes.find(m=>m.id===n.id)||n;setParam(n.id,'on',(cur.params.on??0)>0.5?0:1)});
 el.appendChild(hit)}
 else{
 const head=document.createElement('div');
@@ -716,7 +720,7 @@ tr.addEventListener('pointermove',e=>{if(sd)setFrom(e)});
 tr.addEventListener('pointerup',()=>sd=false);
 tr.addEventListener('pointercancel',()=>sd=false);
 const knob=tr.querySelector('.knob');
-const updknob=()=>{const pct=(clamp(n.params.value??0,-1,1)+1)/2;knob.style.left='calc(22px + '+pct+' * (100% - 44px))'};
+const updknob=()=>{const cur=nodes.find(m=>m.id===n.id)||n;const pct=(clamp(cur.params.value??0,-1,1)+1)/2;knob.style.left='calc(22px + '+pct+' * (100% - 44px))'};
 tr._upd=updknob;updknob();
 el.appendChild(tr)}
 else{
@@ -731,8 +735,9 @@ buildDel(frag,n.kind==='THRUSTER'?33:-9,n.kind==='THRUSTER'?16:-9);
 el.appendChild(frag);
 el.addEventListener('pointerdown',e=>{
 if(e.target.closest('[data-port]')||e.target.closest('[data-nodrag]'))return;
+const cur=nodes.find(m=>m.id===n.id)||n;
 select({type:'node',id:n.id});
-drag={mode:'node',id:n.id,ox:worldPt(e).x-n.x,oy:worldPt(e).y-n.y};
+drag={mode:'node',id:n.id,ox:worldPt(e).x-cur.x,oy:worldPt(e).y-cur.y};
 e.stopPropagation()});
 world.appendChild(el);
 return el}
@@ -741,6 +746,7 @@ for(const[id,el]of nodeEls){if(!nodes.find(n=>n.id===id)){el.remove();nodeEls.de
 for(const n of nodes){
 let el=nodeEls.get(n.id);
 if(!el){el=buildNode(n);nodeEls.set(n.id,el)}
+el.style.left=n.x+'px';el.style.top=n.y+'px';
 el.style.zIndex=sel&&sel.type==='node'&&sel.id===n.id?20:10;
 el.classList.toggle('sel',!!(sel&&sel.type==='node'&&sel.id===n.id));
 for(const pe of el.querySelectorAll('[data-port]')){
@@ -835,9 +841,10 @@ el.addEventListener('pointerdown',e=>{
 if(e.target.closest('.del'))return;
 const hd=e.target.closest('.shandle');
 e.stopPropagation();
+const cur=shapes.find(m=>m.id===s.id)||s;
 select({type:'shape',id:s.id});
-if(hd){drag={mode:'shaperesize',id:s.id,corner:hd.dataset.h,st:worldPt(e),orig:{x:s.x,y:s.y,w:s.w,h:s.h}}}
-else{const p=worldPt(e);drag={mode:'shapemove',id:s.id,ox:p.x-s.x,oy:p.y-s.y}}});
+if(hd){drag={mode:'shaperesize',id:s.id,corner:hd.dataset.h,st:worldPt(e),orig:{x:cur.x,y:cur.y,w:cur.w,h:cur.h}}}
+else{const p=worldPt(e);drag={mode:'shapemove',id:s.id,ox:p.x-cur.x,oy:p.y-cur.y}}});
 world.appendChild(el);
 return el}
 function renderShapes(){
@@ -845,6 +852,7 @@ for(const[id,el]of shapeEls){if(!shapes.find(s=>s.id===id)){el.remove();shapeEls
 for(const s of shapes){
 let el=shapeEls.get(s.id);
 if(!el){el=buildShape(s);shapeEls.set(s.id,el)}
+el.style.left=s.x+'px';el.style.top=s.y+'px';el.style.width=s.w+'px';el.style.height=s.h+'px';
 el.classList.toggle('sel',!!(sel&&sel.type==='shape'&&sel.id===s.id))}}
 function deleteShape(id){
 shapes=shapes.filter(s=>s.id!==id);
@@ -991,7 +999,11 @@ function loadGraph(g,quiet){
 nodes=sanitizeNodes(g.nodes);
 wires=sanitizeWires(g.wires,nodes);
 shapes=sanitizeShapes(g.shapes);
-sel=null;env={};pidState={};memState={};
+sel=null;env={};pidState={};memState={};drag=null;
+for(const el of nodeEls.values())el.remove();
+nodeEls.clear();
+for(const el of shapeEls.values())el.remove();
+shapeEls.clear();
 renderAll();
 if(!quiet)toast('Loaded')}
 function exportJson(){
