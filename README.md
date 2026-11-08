@@ -1,5 +1,5 @@
 # Learn-VCK-Logic
-This website allows you to learn Vehicle Construction kit logic and also test logic(although it might not be the best).
+This website allows you to learn Vehicle Construction kit logic and also test logic(although it might not be the best). I update this not a lot btw!
 
 ## Catalog:
 <img width="2302" height="1277" alt="image" src="https://github.com/user-attachments/assets/923b72ab-85d2-4e53-8db0-f4e039a0e480" />
