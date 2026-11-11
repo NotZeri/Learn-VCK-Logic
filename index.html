@@ -9,6 +9,8 @@ lunch(vibecoder btw)
 
 Changelog:
 
+NotZeri: Added new blocks!
+
 NotZeri: Fixed Blocks offseting after saving
 NotZeri: Fixed Wires breaking after save then moving it and loading it back in
 NotZeri: Added da switch
@@ -436,7 +438,30 @@ footer{border-top:2.5px solid #101010;padding:6px 14px;display:flex;justify-cont
 .swframe{position:absolute;left:9px;top:14px;width:72px;height:192px;background:#b3b3b3;border-radius:16px}
 .swpanel{position:absolute;left:19px;top:26px;width:52px;height:168px;background:#8d8d8d;border-radius:11px}
 .swknob{position:absolute;left:50%;transform:translateX(-50%);width:52px;height:52px;border-radius:50%;background:#e0473c;box-shadow:inset 0 -4px 0 rgba(0,0,0,.15);transition:top .13s;pointer-events:none}
-.swtri{position:absolute;right:-1px;top:104px;transform:translateY(-50%);width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:13px solid #e0473c}
+.swtri{position:absolute;right:-1px;transform:translateY(-50%);width:0;height:0;border-top:7px solid transparent;border-bottom:7px solid transparent;border-left:10px solid #7a7a7a}
+.swtri.mid{border-left-color:#e0473c}
+.dome.r.on{background:#e0473c}
+.dome.r.off{background:#b13a2e}
+.spad{position:absolute;background:#e9e9e9;border-radius:9px;cursor:pointer;touch-action:none}
+.spad:before{content:'';position:absolute;left:50%;top:6px;bottom:6px;width:2px;margin-left:-1px;background:#d2d2d2}
+.spad:after{content:'';position:absolute;top:50%;left:6px;right:6px;height:2px;margin-top:-1px;background:#d2d2d2}
+.spad .dir{position:absolute;font-size:6.5px;font-weight:900;color:#9c9c9c;pointer-events:none}
+.spad .knob{position:absolute;left:50%;top:50%;width:26px;height:26px;border-radius:50%;background:#262626;border:2.5px solid #fff;transform:translate(-50%,-50%);pointer-events:none;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.ctrack .notch{position:absolute;left:50%;top:7px;bottom:7px;width:2px;background:#bdbdbd}
+.numscreen{position:absolute;left:12px;right:12px;top:34px;bottom:10px;background:#101010;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:26px;color:#fff;letter-spacing:-0.02em;font-variant-numeric:tabular-nums}
+.attrow{position:absolute;left:12px;right:12px;height:26px;background:#101010;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 10px;font-size:11px;font-weight:900}
+.attrow b{font-size:7.5px;color:#8f8f8f;letter-spacing:.08em}
+.camscreen{position:absolute;left:12px;right:12px;top:34px;bottom:10px;background:#101010;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.camscreen span{font-size:9px;font-weight:900;letter-spacing:.14em;color:#6f6f6f}
+.camscreen.live span{color:#fff}
+.camscreen.live:before{content:'';position:absolute;width:9px;height:9px;border-radius:50%;background:#e0473c;top:6px;right:6px;animation:blink 1s steps(2) infinite}
+.camscreen.live:after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.08) 0 1px,transparent 1px 3px);animation:cscan .35s linear infinite}
+@keyframes cscan{from{transform:translateY(0)}to{transform:translateY(3px)}}
+@keyframes blink{50%{opacity:.25}}
+.sensor .prow{left:10px;right:10px;bottom:8px}
+.sensor .plabel{color:rgba(255,255,255,.65)}
+.sensor .num{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.4);color:#fff}
+.sensor .num:focus{border-color:#fff}
 #site{display:none;flex-direction:column;flex:1;min-height:0;overflow-y:auto;background:#fff}
 #app{display:none;flex-direction:column;flex:1;min-height:0}
 body[data-view=site] #site{display:flex}
@@ -560,29 +585,56 @@ header h1{font-size:13px}
 const IN_COLOR='#e0473c',OUT_COLOR='#4a9ce8',AUTOKEY='logic-planner-standalone-auto',SAVEKEY='logic-planner-standalone-save';
 const P=(id,label,x,y,size,dim)=>({id,label,x,y,size,dim});
 const BLOCKS={
-CONST:{title:'CONST',cat:'INPUT',w:190,h:104,tc:false,inputs:[],outputs:[P('OUT','OUT',190,52)],params:[{key:'value',label:'VALUE',def:0,step:0.01,min:-1,max:1}]},
-BUTTON:{title:'BUTTON',cat:'INPUT',w:130,h:88,tc:false,inputs:[],outputs:[P('OUT','OUT',65,72)],params:[{key:'pressed',label:'PRESSED',def:0,step:1}]},
+CONST:{title:'CONST',cat:'DATA',w:190,h:104,tc:false,inputs:[],outputs:[P('OUT','OUT',190,52)],params:[{key:'value',label:'VALUE',def:0,step:0.01,min:-1,max:1}]},
+BUTTON:{title:'SWITCH',pn:'SWITCH',cat:'CONTROLS',w:130,h:88,tc:false,inputs:[],outputs:[P('OUT','OUT',65,72)],params:[{key:'pressed',label:'PRESSED',def:0,step:1}]},
+ONEBTN:{title:'BUTTON',pn:'BUTTON',cat:'CONTROLS',w:130,h:88,tc:false,inputs:[],outputs:[P('OUT','OUT',65,72)],params:[{key:'pressed',label:'PRESSED',def:0,step:1}]},
+SWITCH:{title:'LEVER',pn:'LEVER',cat:'CONTROLS',w:90,h:220,tc:true,inputs:[],outputs:[P('UP','UP',90,22),P('DOWN','DOWN',90,198)],params:[{key:'pos',label:'POS',def:0,step:1}]},
+STEERING:{title:'FLIGHT STICK',pn:'FLIGHT STICK',cat:'CONTROLS',w:150,h:178,tc:true,inputs:[],outputs:[P('UP','UP',150,44),P('DOWN','DOWN',150,76),P('LEFT','LEFT',150,108),P('RIGHT','RIGHT',150,140)],params:[{key:'x',label:'X',def:0,step:0.01},{key:'y',label:'Y',def:0,step:0.01}]},
 PID:{title:'PID',cat:'LOGIC',w:200,h:140,tc:true,inputs:[P('TARGET','TARGET',0,50),P('CURRENT','CURRENT',0,86)],outputs:[P('OUT','OUT',200,68)],params:[{key:'kp',label:'P',def:1,step:0.01},{key:'ki',label:'I',def:0,step:0.01},{key:'kd',label:'D',def:0,step:0.01}]},
-ADD:{title:'ADD',cat:'MATH',w:170,h:108,tc:true,inputs:[P('A','A',0,50),P('B','B',0,84)],outputs:[P('OUT','OUT',170,67)],params:[]},
-SUB:{title:'SUB',cat:'MATH',w:170,h:108,tc:true,inputs:[P('A','A',0,50),P('B','B',0,84)],outputs:[P('OUT','OUT',170,67)],params:[]},
-MUL:{title:'MUL',cat:'MATH',w:170,h:108,tc:true,inputs:[P('A','A',0,50),P('B','B',0,84)],outputs:[P('OUT','OUT',170,67)],params:[]},
-DIV:{title:'DIV',cat:'MATH',w:170,h:108,tc:true,inputs:[P('A','A',0,50),P('B','B',0,84)],outputs:[P('OUT','OUT',170,67)],params:[]},
-MIN:{title:'MIN',cat:'MATH',w:170,h:108,tc:true,inputs:[P('A','A',0,50),P('B','B',0,84)],outputs:[P('OUT','OUT',170,67)],params:[]},
-MAX:{title:'MAX',cat:'MATH',w:170,h:108,tc:true,inputs:[P('A','A',0,50),P('B','B',0,84)],outputs:[P('OUT','OUT',170,67)],params:[]},
-INVERT:{title:'INVERT',cat:'MATH',w:170,h:96,tc:true,inputs:[P('IN','IN',0,56)],outputs:[P('OUT','OUT',170,56)],params:[]},
-ABS:{title:'ABS',cat:'MATH',w:170,h:96,tc:true,inputs:[P('IN','IN',0,56)],outputs:[P('OUT','OUT',170,56)],params:[]},
-CLAMP:{title:'CLAMP',cat:'MATH',w:190,h:128,tc:true,inputs:[P('IN','IN',0,48)],outputs:[P('OUT','OUT',190,48)],params:[{key:'min',label:'MIN',def:-1,step:0.01},{key:'max',label:'MAX',def:1,step:0.01}]},
+STORE:{title:'STORE',cat:'LOGIC',w:180,h:124,tc:true,inputs:[P('VALUE','Value',0,34,26),P('STORE','Store',0,90,26)],outputs:[P('OUT','Stored',180,62,26)],params:[]},
+ADD:{title:'ADD',cat:'ARITHMETIC',w:170,h:108,tc:true,inputs:[P('A','A',0,50),P('B','B',0,84)],outputs:[P('OUT','OUT',170,67)],params:[]},
+SUB:{title:'SUB',cat:'ARITHMETIC',w:170,h:108,tc:true,inputs:[P('A','A',0,50),P('B','B',0,84)],outputs:[P('OUT','OUT',170,67)],params:[]},
+MUL:{title:'MUL',cat:'ARITHMETIC',w:170,h:108,tc:true,inputs:[P('A','A',0,50),P('B','B',0,84)],outputs:[P('OUT','OUT',170,67)],params:[]},
+DIV:{title:'DIV',cat:'ARITHMETIC',w:170,h:108,tc:true,inputs:[P('A','A',0,50),P('B','B',0,84)],outputs:[P('OUT','OUT',170,67)],params:[]},
+INVERT:{title:'INVERT',cat:'ARITHMETIC',w:170,h:96,tc:true,inputs:[P('IN','IN',0,56)],outputs:[P('OUT','OUT',170,56)],params:[]},
+ABS:{title:'ABS',cat:'ARITHMETIC',w:170,h:96,tc:true,inputs:[P('IN','IN',0,56)],outputs:[P('OUT','OUT',170,56)],params:[]},
+TIMER:{title:'TIMER',cat:'ARITHMETIC',w:190,h:150,tc:true,inputs:[P('START','START',0,44),P('RESET','RESET',0,100)],outputs:[P('OUT','OUT',190,44),P('LEFT','LEFT',190,100)],params:[{key:'secs',label:'SECONDS',def:3,step:0.1,min:0.1,max:600}]},
+SELECT:{title:'SELECT',cat:'ARITHMETIC',w:170,h:150,tc:true,inputs:[P('A','A',0,44),P('B','B',0,80),P('SEL','SEL',0,116)],outputs:[P('OUT','OUT',170,80)],params:[]},
+COUNTER:{title:'COUNTER',cat:'ARITHMETIC',w:190,h:150,tc:true,inputs:[P('COUNT','COUNT',0,44),P('RESET','RESET',0,100)],outputs:[P('COUNT','COUNT',190,44),P('DONE','DONE',190,100)],params:[{key:'target',label:'TARGET',def:5,step:1,min:1,max:999}]},
+MIN:{title:'MIN',cat:'COMPARE',w:170,h:108,tc:true,inputs:[P('A','A',0,50),P('B','B',0,84)],outputs:[P('OUT','OUT',170,67)],params:[]},
+MAX:{title:'MAX',cat:'COMPARE',w:170,h:108,tc:true,inputs:[P('A','A',0,50),P('B','B',0,84)],outputs:[P('OUT','OUT',170,67)],params:[]},
+CLAMP:{title:'CLAMP',cat:'COMPARE',w:190,h:128,tc:true,inputs:[P('IN','IN',0,48)],outputs:[P('OUT','OUT',190,48)],params:[{key:'min',label:'MIN',def:-1,step:0.01},{key:'max',label:'MAX',def:1,step:0.01}]},
+GREATER:{title:'GREATER',cat:'COMPARE',w:170,h:108,tc:true,inputs:[P('A','A',0,50),P('B','B',0,84)],outputs:[P('OUT','OUT',170,67)],params:[]},
+LESS:{title:'LESS',cat:'COMPARE',w:170,h:108,tc:true,inputs:[P('A','A',0,50),P('B','B',0,84)],outputs:[P('OUT','OUT',170,67)],params:[]},
+EQUALS:{title:'EQUALS',cat:'COMPARE',w:170,h:108,tc:true,inputs:[P('A','A',0,50),P('B','B',0,84)],outputs:[P('OUT','OUT',170,67)],params:[]},
+SPEED:{title:'SPEED',cat:'SENSORS',w:110,h:84,tc:true,inputs:[],outputs:[P('SPD','SPD',110,50)],params:[]},
+VELOCITY:{title:'VELOCITY',cat:'SENSORS',w:110,h:118,tc:true,inputs:[],outputs:[P('VX','VX',110,36),P('VY','VY',110,68),P('VZ','VZ',110,100)],params:[]},
+ANGVEL:{title:'ANG VEL',pn:'ANG VEL',cat:'SENSORS',w:110,h:118,tc:true,inputs:[],outputs:[P('AX','AX',110,36),P('AY','AY',110,68),P('AZ','AZ',110,100)],params:[]},
+DISTANCE:{title:'DISTANCE',cat:'SENSORS',w:120,h:84,tc:true,inputs:[],outputs:[P('DIST','DIST',120,50)],params:[]},
 ATT:{title:'ATT',cat:'SENSORS',w:100,h:104,tc:true,inputs:[],outputs:[P('YAW','YAW',100,26),P('PITCH','PITCH',100,52),P('ROLL','ROLL',100,78)],params:[]},
 ALT:{title:'ALT',cat:'SENSORS',w:100,h:104,tc:true,inputs:[],outputs:[P('ALT','ALT',100,52)],params:[]},
-THRUSTER:{title:'THRUSTER',cat:'OUTPUT',w:150,h:216,tc:true,inputs:[P('THROTTLE','Throttle',75,28,38),P('X','X',55,178,26),P('Y','Y',105,160,26,1)],outputs:[],params:[]},
-SWITCH:{title:'SWITCH',cat:'INPUT',w:90,h:220,tc:true,inputs:[],outputs:[P('ON','OUT',90,22),P('OFF','OUT',90,198)],params:[{key:'on',label:'ON',def:0,step:1}]},
-STORE:{title:'STORE',cat:'LOGIC',w:180,h:124,tc:true,inputs:[P('VALUE','Value',0,34,26),P('STORE','Store',0,90,26)],outputs:[P('OUT','Stored',180,62,26)],params:[]}};
-const PALETTE=[['INPUT',['CONST','BUTTON','SWITCH']],['MATH',['ADD','SUB','MUL','DIV','INVERT','ABS','MIN','MAX','CLAMP']],['LOGIC',['PID','STORE']],['SENSORS',['ATT','ALT']],['OUTPUT',['THRUSTER']],['SHAPES',['SQUARE','GRAY','BLACK']]];
+DRAG:{title:'DRAG',cat:'ENVIRONMENT',w:110,h:84,tc:true,inputs:[],outputs:[P('DRAG','DRAG',110,50)],params:[]},
+LIFT:{title:'LIFT',cat:'ENVIRONMENT',w:110,h:84,tc:true,inputs:[],outputs:[P('LIFT','LIFT',110,50)],params:[]},
+ETHRUST:{title:'EFF THRUST',pn:'EFF THRUST',cat:'ENVIRONMENT',w:140,h:84,tc:true,inputs:[],outputs:[P('THRUST','THRUST',140,50)],params:[]},
+DVEL:{title:'DELTA-V',pn:'DELTA-V',cat:'ENVIRONMENT',w:110,h:84,tc:true,inputs:[],outputs:[P('DV','DV',110,50)],params:[]},
+DENSITY:{title:'DENSITY',cat:'ENVIRONMENT',w:120,h:84,tc:true,inputs:[],outputs:[P('DEN','DEN',120,50)],params:[]},
+MASS:{title:'MASS',cat:'ENVIRONMENT',w:110,h:84,tc:true,inputs:[],outputs:[P('MASS','MASS',110,50)],params:[]},
+TEMP:{title:'TEMP.',pn:'TEMP.',cat:'ENVIRONMENT',w:110,h:84,tc:true,inputs:[],outputs:[P('TEMP','TEMP',110,50)],params:[]},
+HEAT:{title:'HEAT',cat:'ENVIRONMENT',w:110,h:84,tc:true,inputs:[],outputs:[P('HEAT','HEAT',110,50)],params:[]},
+IMPACT:{title:'IMPACT',cat:'ENVIRONMENT',w:140,h:120,tc:true,inputs:[],outputs:[P('TRIG','TRIG',140,64)],params:[{key:'thresh',label:'THRESHOLD',def:10,step:1,min:0,max:100}]},
+NUMDISP:{title:'NUMBER DISPLAY',pn:'NUMBER DSP',cat:'DISPLAY',w:150,h:110,tc:true,inputs:[P('IN','IN',0,62)],outputs:[],params:[]},
+ATTDISP:{title:'ATTITUDE',cat:'DISPLAY',w:150,h:150,tc:true,inputs:[],outputs:[],params:[]},
+CAMSCR:{title:'CAMERA SCREEN',pn:'CAM SCREEN',cat:'DISPLAY',w:180,h:150,tc:true,inputs:[P('FEED','FEED',0,90)],outputs:[],params:[]},
+CAM:{title:'CAMERA',cat:'MISC',w:130,h:96,tc:true,inputs:[],outputs:[P('FEED','FEED',130,56)],params:[]},
+THRUSTER:{title:'THRUSTER',cat:'OUTPUT',w:150,h:216,tc:true,inputs:[P('THROTTLE','Throttle',75,28,38),P('X','X',55,178,26),P('Y','Y',105,160,26,1)],outputs:[],params:[]}};
+const SENSOR_KINDS=['ATT','ALT','SPEED','VELOCITY','ANGVEL','DISTANCE','DRAG','LIFT','ETHRUST','DVEL','DENSITY','MASS','TEMP','HEAT','IMPACT'];
+const ENV_DEFAULTS={speed:40,vx:0,vy:0,vz:0,ax:0,ay:0,az:0,dist:60,drag:0.2,lift:25,ethrust:40,dv:150,den:0.9,mass:500,temp:20,heat:0,imp:0};
+const PALETTE=[['DATA',['CONST']],['CONTROLS',['ONEBTN','BUTTON','SWITCH','STEERING']],['ARITHMETIC',['ADD','SUB','MUL','DIV','INVERT','ABS','TIMER','SELECT','COUNTER']],['LOGIC',['PID','STORE']],['COMPARE',['MIN','MAX','CLAMP','GREATER','LESS','EQUALS']],['SENSORS',['SPEED','VELOCITY','ANGVEL','ATT','ALT','DISTANCE']],['ENVIRONMENT',['DRAG','LIFT','ETHRUST','DVEL','DENSITY','MASS','TEMP','HEAT','IMPACT']],['DISPLAY',['NUMDISP','ATTDISP','CAMSCR']],['MISC',['CAM']],['OUTPUT',['THRUSTER']],['SHAPES',['SQUARE','GRAY','BLACK']]];
 const uid=()=>Math.random().toString(36).slice(2,10);
 const clamp=(v,lo,hi)=>Math.min(hi,Math.max(lo,v));
 const fmt=v=>v===undefined||v===null||!Number.isFinite(v)?'0':String(Math.round(v*100)/100);
 let nodes=[],wires=[],shapes=[],view={x:0,y:0,k:1},sel=null,simOn=false,auto=true,time=0;
-let env={},pidState={},memState={},outs=new Map(),inVals=new Map(),prevOuts=new Map(),simTimer=null;
+let env={},pidState={},memState={},timerState={},cntState={},outs=new Map(),inVals=new Map(),prevOuts=new Map(),simTimer=null;
 const nodeEls=new Map(),wireEls=new Map(),shapeEls=new Map();
 const $=id=>document.getElementById(id);
 const cv=$('cv'),world=$('world'),wiresSvg=$('wires'),wireG=$('wireG'),palEl=$('palette'),panel=$('simpanel');
@@ -597,12 +649,15 @@ function createNode(kind,x,y){return{id:uid(),kind,x:Math.round(x),y:Math.round(
 function wirePath(a,b){const dx=clamp(Math.abs(b.x-a.x)*0.5,40,160);return 'M'+a.x+' '+a.y+' C '+(a.x+dx)+' '+a.y+', '+(b.x-dx)+' '+b.y+', '+b.x+' '+b.y}
 function svgEl(tag,attrs){const e=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const k in attrs)e.setAttribute(k,attrs[k]);return e}
 function sanitizeNodes(raw){if(!Array.isArray(raw))return[];const out=[];for(const r of raw){if(!r||typeof r!=='object')continue;const kind=r.kind;if(!BLOCKS[kind]||typeof r.id!=='string')continue;const params=defParams(kind);if(r.params&&typeof r.params==='object'){for(const k of Object.keys(params)){const v=r.params[k];if(typeof v==='number'&&Number.isFinite(v))params[k]=v}}out.push({id:r.id,kind,x:typeof r.x==='number'&&Number.isFinite(r.x)?r.x:0,y:typeof r.y==='number'&&Number.isFinite(r.y)?r.y:0,params})}return out}
-function sanitizeWires(raw,ns){if(!Array.isArray(raw))return[];const ids=new Set(ns.map(n=>n.id));const out=[],seen=new Set();for(const r of raw){if(!r||typeof r!=='object')continue;if(typeof r.id!=='string'||typeof r.fromNode!=='string'||typeof r.fromPort!=='string'||typeof r.toNode!=='string'||typeof r.toPort!=='string')continue;if(!ids.has(r.fromNode)||!ids.has(r.toNode)||r.fromNode===r.toNode)continue;const key=r.fromNode+'|'+r.fromPort+'|'+r.toNode+'|'+r.toPort;if(seen.has(key))continue;seen.add(key);out.push({id:r.id,fromNode:r.fromNode,fromPort:r.fromPort,toNode:r.toNode,toPort:r.toPort})}return out}
+function sanitizeWires(raw,ns){if(!Array.isArray(raw))return[];const ids=new Set(ns.map(n=>n.id));const out=[],seen=new Set();const fx=(nid,port)=>{const nd=ns.find(m=>m.id===nid);if(nd&&nd.kind==='SWITCH'){if(port==='ON')return 'UP';if(port==='OFF')return 'DOWN'}return port};for(const r of raw){if(!r||typeof r!=='object')continue;if(typeof r.id!=='string'||typeof r.fromNode!=='string'||typeof r.fromPort!=='string'||typeof r.toNode!=='string'||typeof r.toPort!=='string')continue;if(!ids.has(r.fromNode)||!ids.has(r.toNode)||r.fromNode===r.toNode)continue;const fp=fx(r.fromNode,r.fromPort),tp=fx(r.toNode,r.toPort);const key=r.fromNode+'|'+fp+'|'+r.toNode+'|'+tp;if(seen.has(key))continue;seen.add(key);out.push({id:r.id,fromNode:r.fromNode,fromPort:fp,toNode:r.toNode,toPort:tp})}return out}
 function demoGraph(){const mk=(id,kind,x,y,p)=>({id,kind,x,y,params:Object.assign(defParams(kind),p||{})});const nodes=[mk('btn1','BUTTON',60,120,{pressed:0}),mk('pid1','PID',320,60,{kp:2,ki:0,kd:0.1}),mk('att1','ATT',320,280),mk('thr1','THRUSTER',640,40),mk('con1','CONST',60,320,{value:0.5}),mk('alt1','ALT',60,470),mk('mul1','MUL',320,440),mk('thr2','THRUSTER',640,260),mk('inv1','INVERT',320,620),mk('thr3','THRUSTER',640,480)];const w=(id,fn,fp,tn,tp)=>({id,fromNode:fn,fromPort:fp,toNode:tn,toPort:tp});const wires=[w('w1','btn1','OUT','pid1','TARGET'),w('w2','att1','YAW','pid1','CURRENT'),w('w3','pid1','OUT','thr1','THROTTLE'),w('w4','con1','OUT','mul1','A'),w('w5','alt1','ALT','mul1','B'),w('w6','mul1','OUT','thr2','THROTTLE'),w('w7','att1','ROLL','inv1','IN'),w('w8','inv1','OUT','thr3','THROTTLE')];const shapes=[{id:'sh1',color:'black',x:980,y:180,w:60,h:34},{id:'sh2',color:'gray',x:980,y:214,w:60,h:150},{id:'sh3',color:'white',x:954,y:314,w:26,h:50},{id:'sh4',color:'white',x:1040,y:314,w:26,h:50}];return{nodes,wires,shapes}}
 function autoEnv(t,ph){return{yaw:Math.sin(t*0.6+ph)*0.9,pitch:Math.sin(t*0.45+ph+1.4)*0.7,roll:Math.sin(t*0.85+ph+2.8)*0.8,alt:50+45*Math.sin(t*0.3+ph)}}
 function stepSim(){
 const out=new Map(),inV=new Map();
+const sw=(lo,hi,f,ph)=>lo+(hi-lo)*(0.5+0.5*Math.sin(f*time+ph));
 const readIn=(nid,port)=>{const w=wires.find(x=>x.toNode===nid&&x.toPort===port);if(!w)return 0;const key=w.fromNode+'|'+w.fromPort;const v=out.get(key);return v!==undefined?v:(prevOuts.get(key)??0)};
+const camFeed=w2=>{const src=nodes.find(m=>m.id===w2.fromNode);return src&&src.kind==='CAM'&&w2.fromPort==='FEED'};
+const liveScr=nodes.filter(nn=>nn.kind==='CAMSCR'&&wires.some(w2=>w2.toNode===nn.id&&camFeed(w2))).slice(0,2).map(nn=>nn.id);
 nodes.forEach((n,idx)=>{
 const prm=n.params||{};
 const set=(port,v)=>out.set(n.id+'|'+port,Number.isFinite(v)?v:0);
@@ -610,7 +665,7 @@ const note=(port,v)=>inV.set(n.id+'|'+port,v);
 switch(n.kind){
 case 'CONST':set('OUT',prm.value??0);break;
 case 'BUTTON':set('OUT',prm.pressed?1:0);break;
-case 'SWITCH':{const on=prm.on>0.5;set('ON',on?1:0);set('OFF',on?0:1);break}
+case 'SWITCH':{const p=prm.pos??0;set('UP',p>0.5?1:0);set('DOWN',p<-0.5?1:0);break}
 case 'STORE':{const val=readIn(n.id,'VALUE'),trg=readIn(n.id,'STORE');note('VALUE',val);note('STORE',trg);let st=memState[n.id];if(!st){st={v:0};memState[n.id]=st}if(trg>0.5)st.v=val;set('OUT',st.v);break}
 case 'ADD':note('A',readIn(n.id,'A'));note('B',readIn(n.id,'B'));set('OUT',readIn(n.id,'A')+readIn(n.id,'B'));break;
 case 'SUB':note('A',readIn(n.id,'A'));note('B',readIn(n.id,'B'));set('OUT',readIn(n.id,'A')-readIn(n.id,'B'));break;
@@ -624,6 +679,31 @@ case 'CLAMP':note('IN',readIn(n.id,'IN'));set('OUT',clamp(readIn(n.id,'IN'),prm.
 case 'PID':{note('TARGET',readIn(n.id,'TARGET'));note('CURRENT',readIn(n.id,'CURRENT'));const target=readIn(n.id,'TARGET'),current=readIn(n.id,'CURRENT');let st=pidState[n.id];if(!st){st={i:0,pe:0};pidState[n.id]=st}const err=target-current;st.i=clamp(st.i+err*0.016,-50,50);const d=(err-st.pe)/0.016;st.pe=err;set('OUT',(prm.kp??0)*err+(prm.ki??0)*st.i+(prm.kd??0)*d);break}
 case 'ATT':{const e=(auto?autoEnv(time,idx*1.7):(env[n.id]||{yaw:0,pitch:0,roll:0,alt:10}));set('YAW',e.yaw);set('PITCH',e.pitch);set('ROLL',e.roll);break}
 case 'ALT':{const a=auto?autoEnv(time,idx*1.7).alt:((env[n.id]||{alt:10}).alt);set('ALT',a);break}
+case 'ONEBTN':set('OUT',prm.pressed?1:0);break;
+case 'STEERING':{const x=clamp(prm.x??0,-1,1),y=clamp(prm.y??0,-1,1);set('UP',Math.max(0,y));set('DOWN',Math.max(0,-y));set('RIGHT',Math.max(0,x));set('LEFT',Math.max(0,-x));break}
+case 'TIMER':{const start=readIn(n.id,'START'),rst=readIn(n.id,'RESET');note('START',start);note('RESET',rst);let st=timerState[n.id];if(!st){st={run:false,left:prm.secs??3,done:false,ps:0};timerState[n.id]=st}if(rst>0.5){st.run=false;st.done=false}if(start>0.5&&st.ps<=0.5&&!st.run&&!st.done){st.run=true;st.left=prm.secs??3}st.ps=start;if(st.run){st.left-=0.016;if(st.left<=0){st.left=0;st.run=false;st.done=true}}set('OUT',st.done?1:0);set('LEFT',st.run?st.left:0);break}
+case 'SELECT':{const a=readIn(n.id,'A'),b=readIn(n.id,'B'),sc=readIn(n.id,'SEL');note('A',a);note('B',b);note('SEL',sc);set('OUT',sc>0.5?b:a);break}
+case 'COUNTER':{const c=readIn(n.id,'COUNT'),rst=readIn(n.id,'RESET');note('COUNT',c);note('RESET',rst);let st=cntState[n.id];if(!st){st={c:0,ps:0};cntState[n.id]=st}if(rst>0.5){st.c=0;st.ps=c}else{if(c>0.5&&st.ps<=0.5)st.c++;st.ps=c}set('COUNT',st.c);set('DONE',st.c>=(prm.target??5)?1:0);break}
+case 'GREATER':{const a=readIn(n.id,'A'),b=readIn(n.id,'B');note('A',a);note('B',b);set('OUT',a>b?1:0);break}
+case 'LESS':{const a=readIn(n.id,'A'),b=readIn(n.id,'B');note('A',a);note('B',b);set('OUT',a<b?1:0);break}
+case 'EQUALS':{const a=readIn(n.id,'A'),b=readIn(n.id,'B');note('A',a);note('B',b);set('OUT',Math.abs(a-b)<0.001?1:0);break}
+case 'SPEED':set('SPD',auto?sw(20,120,0.7,idx*1.7):((env[n.id]||{}).speed??40));break;
+case 'VELOCITY':{const e=env[n.id]||{};set('VX',auto?sw(-40,40,0.5,idx*1.7):(e.vx??0));set('VY',auto?sw(-25,25,0.9,idx*1.7+1):(e.vy??0));set('VZ',auto?sw(-15,15,0.35,idx*1.7+2):(e.vz??0));break}
+case 'ANGVEL':{const e=env[n.id]||{};set('AX',auto?sw(-0.6,0.6,1.3,idx*1.7):(e.ax??0));set('AY',auto?sw(-0.6,0.6,1.1,idx*1.7+1):(e.ay??0));set('AZ',auto?sw(-0.6,0.6,0.8,idx*1.7+2):(e.az??0));break}
+case 'DISTANCE':set('DIST',auto?sw(20,180,0.25,idx*1.7):((env[n.id]||{}).dist??60));break;
+case 'DRAG':set('DRAG',auto?sw(0.05,0.55,0.4,idx*1.7):((env[n.id]||{}).drag??0.2));break;
+case 'LIFT':set('LIFT',auto?sw(5,55,0.6,idx*1.7):((env[n.id]||{}).lift??25));break;
+case 'ETHRUST':set('THRUST',auto?sw(5,75,0.8,idx*1.7):((env[n.id]||{}).ethrust??40));break;
+case 'DVEL':set('DV',auto?sw(30,270,0.2,idx*1.7):((env[n.id]||{}).dv??150));break;
+case 'DENSITY':set('DEN',auto?sw(0.4,1,0.15,idx*1.7):((env[n.id]||{}).den??0.9));break;
+case 'MASS':set('MASS',auto?sw(300,700,0.1,idx*1.7):((env[n.id]||{}).mass??500));break;
+case 'TEMP':set('TEMP',auto?sw(-10,50,0.3,idx*1.7):((env[n.id]||{}).temp??20));break;
+case 'HEAT':set('HEAT',auto?clamp(sw(0,80,0.5,idx*1.7),0,100):((env[n.id]||{}).heat??0));break;
+case 'IMPACT':{const imp=auto?Math.max(0,Math.sin(0.53*time+idx*2.21)-0.86)*700:((env[n.id]||{}).imp??0);set('TRIG',imp>(prm.thresh??10)?1:0);break}
+case 'NUMDISP':note('IN',readIn(n.id,'IN'));break;
+case 'ATTDISP':{const e=auto?autoEnv(time,idx*1.7):(env[n.id]||{yaw:0,pitch:0,roll:0});set('YAW',e.yaw);set('PITCH',e.pitch);set('ROLL',e.roll);break}
+case 'CAMSCR':{const feed=readIn(n.id,'FEED');note('FEED',feed);out.set(n.id+'|__live',liveScr.includes(n.id)?1:0);break}
+case 'CAM':set('FEED',1);break;
 case 'THRUSTER':{const t=readIn(n.id,'THROTTLE');note('THROTTLE',t);note('X',readIn(n.id,'X'));note('Y',readIn(n.id,'Y'));out.set(n.id+'|__thrust',clamp(t,-1,1));out.set(n.id+'|__gx',clamp(readIn(n.id,'X'),-1,1));out.set(n.id+'|__gy',clamp(readIn(n.id,'Y'),-1,1));break}
 }});
 return{out,inV}}
@@ -668,17 +748,28 @@ const el=document.createElement('div');
 el.className='node';el.dataset.id=n.id;
 el.style.cssText='left:'+n.x+'px;top:'+n.y+'px;width:'+def.w+'px;height:'+def.h+'px;';
 if(n.kind==='THRUSTER'){el.style.border='none';el.style.background='transparent'}
-else if(n.kind==='BUTTON'||n.kind==='ATT'||n.kind==='ALT'||n.kind==='SWITCH')el.style.border='none';
+else if(n.kind==='BUTTON'||n.kind==='ONEBTN'||n.kind==='SWITCH'||SENSOR_KINDS.includes(n.kind))el.style.border='none';
 if(n.kind==='BUTTON'){
 const base=document.createElement('div');base.className='bbase';el.appendChild(base);
 const dome=document.createElement('div');dome.className='dome '+(n.params.pressed>0.5?'on':'off');el.appendChild(dome);
-const hit=document.createElement('div');hit.className='domehit';hit.title='Button - toggles 0 / 1';
+const hit=document.createElement('div');hit.className='domehit';hit.title='Switch - click to toggle 0 / 1';
 hit.addEventListener('pointerdown',e=>e.stopPropagation());
 hit.addEventListener('click',e=>{e.stopPropagation();const cur=nodes.find(m=>m.id===n.id)||n;setParam(n.id,'pressed',(cur.params.pressed??0)>0.5?0:1)});
 el.appendChild(hit)}
-else if(n.kind==='ATT'||n.kind==='ALT'){
+else if(n.kind==='ONEBTN'){
+const base=document.createElement('div');base.className='bbase';el.appendChild(base);
+const dome=document.createElement('div');dome.className='dome r '+(n.params.pressed>0.5?'on':'off');el.appendChild(dome);
+const hit=document.createElement('div');hit.className='domehit';hit.title='Button - outputs 1 while held';
+hit.addEventListener('pointerdown',e=>{e.stopPropagation();hit.setPointerCapture(e.pointerId);setParam(n.id,'pressed',1)});
+hit.addEventListener('pointerup',()=>setParam(n.id,'pressed',0));
+hit.addEventListener('pointercancel',()=>setParam(n.id,'pressed',0));
+el.appendChild(hit)}
+else if(SENSOR_KINDS.includes(n.kind)){
 el.classList.add('sensor');
-const t=document.createElement('span');t.className='ntitle';t.textContent=def.title;el.appendChild(t)}
+const t=document.createElement('span');t.className='ntitle';t.textContent=def.title;
+t.style.fontSize=def.title.length<=4?'26px':(def.title.length<=7?'16px':'12.5px');
+el.appendChild(t);
+if(def.params.length){const row=document.createElement('div');row.className='prow';row.dataset.nodrag='1';for(const pd of def.params)buildNum(n,pd,row);el.appendChild(row)}}
 else if(n.kind==='THRUSTER'){
 const fl=document.createElementNS('http://www.w3.org/2000/svg','svg');
 fl.setAttribute('class','flame');fl.setAttribute('viewBox','0 0 72 66');
@@ -691,12 +782,62 @@ const pct=document.createElement('div');pct.className='tpct';pct.dataset.tpct=n.
 else if(n.kind==='SWITCH'){
 const fr=document.createElement('div');fr.className='swframe';el.appendChild(fr);
 const pn=document.createElement('div');pn.className='swpanel';el.appendChild(pn);
-const kn=document.createElement('div');kn.className='swknob';kn.style.top=n.params.on>0.5?'34px':'134px';el.appendChild(kn);
-const tr=document.createElement('div');tr.className='swtri';el.appendChild(tr);
-const hit=document.createElement('div');hit.className='swhit';hit.title='Switch - flips ON / OFF';
-hit.addEventListener('pointerdown',e=>e.stopPropagation());
-hit.addEventListener('click',e=>{e.stopPropagation();const cur=nodes.find(m=>m.id===n.id)||n;setParam(n.id,'on',(cur.params.on??0)>0.5?0:1)});
+const mktri=t=>{const s=document.createElement('div');s.className='swtri'+(t===110?' mid':'');s.style.top=t+'px';el.appendChild(s)};
+mktri(60);mktri(110);mktri(160);
+const kn=document.createElement('div');kn.className='swknob';el.appendChild(kn);
+const setKnob=p=>{kn.style.top=p>0.5?'34px':(p<-0.5?'134px':'84px')};
+setKnob(n.params.pos??0);
+const hit=document.createElement('div');hit.className='swhit';hit.title='Lever - hold up or down, springs back to middle';
+let lh=false;
+const zone=e=>{const r=hit.getBoundingClientRect();const y=e.clientY-r.top;return y<r.height*0.34?1:(y>r.height*0.66?-1:0)};
+hit.addEventListener('pointerdown',e=>{e.stopPropagation();lh=true;try{hit.setPointerCapture(e.pointerId)}catch(err){}setParam(n.id,'pos',zone(e))});
+hit.addEventListener('pointermove',e=>{if(!lh)return;const z=zone(e);if(z)setParam(n.id,'pos',z)});
+const rel=()=>{if(!lh)return;lh=false;setParam(n.id,'pos',0)};
+hit.addEventListener('pointerup',rel);
+hit.addEventListener('pointercancel',rel);
 el.appendChild(hit)}
+else if(n.kind==='STEERING'){
+const head=document.createElement('div');
+head.className='ntitle';
+head.textContent=def.title;
+head.style.cssText='text-align:center;padding:6px 12px 0';
+el.appendChild(head);
+const pad=document.createElement('div');pad.className='spad';pad.dataset.nodrag='1';
+pad.style.cssText='left:25px;top:34px;width:100px;height:100px;';
+pad.innerHTML='<span class="dir" style="top:3px;left:50%;transform:translateX(-50%)">UP</span><span class="dir" style="bottom:3px;left:50%;transform:translateX(-50%)">DOWN</span><span class="dir" style="left:5px;top:50%;transform:translateY(-50%)">L</span><span class="dir" style="right:5px;top:50%;transform:translateY(-50%)">R</span>';
+const knob=document.createElement('div');knob.className='knob';pad.appendChild(knob);
+const knobAt=(px,py)=>{knob.style.left=(50+px*36)+'%';knob.style.top=(50-py*36)+'%'};
+const upd=()=>{const cur=nodes.find(m=>m.id===n.id)||n;knobAt(clamp(cur.params.x??0,-1,1),clamp(cur.params.y??0,-1,1))};
+let sd=false;
+const moveStick=e=>{const r=pad.getBoundingClientRect();const x=clamp((e.clientX-r.left-r.width/2)/Math.max(1,r.width/2-16),-1,1);const y=clamp(-(e.clientY-r.top-r.height/2)/Math.max(1,r.height/2-16),-1,1);const cur=nodes.find(m=>m.id===n.id);if(cur){cur.params.x=Math.round(x*100)/100;cur.params.y=Math.round(y*100)/100}knobAt(x,y)};
+pad.addEventListener('pointerdown',e=>{e.stopPropagation();sd=true;try{pad.setPointerCapture(e.pointerId)}catch(err){}moveStick(e)});
+pad.addEventListener('pointermove',e=>{if(sd)moveStick(e)});
+const rel=()=>{if(!sd)return;sd=false;const cur=nodes.find(m=>m.id===n.id);if(cur){cur.params.x=0;cur.params.y=0}upd()};
+pad.addEventListener('pointerup',rel);
+pad.addEventListener('pointercancel',rel);
+upd();
+el.appendChild(pad)}
+else if(n.kind==='NUMDISP'){
+const head=document.createElement('div');
+head.className='ntitle';head.textContent=def.title;head.style.cssText='text-align:center;padding:6px 12px 0;font-size:12.5px';
+el.appendChild(head);
+const scr=document.createElement('div');scr.className='numscreen';scr.dataset.numdsp=n.id;scr.textContent='--';el.appendChild(scr)}
+else if(n.kind==='ATTDISP'){
+const head=document.createElement('div');
+head.className='ntitle';head.textContent=def.title;head.style.cssText='text-align:center;padding:6px 12px 0;font-size:12.5px';
+el.appendChild(head);
+for(const ar of[['YAW',34],['PITCH',64],['ROLL',94]]){
+const r2=document.createElement('div');r2.className='attrow';r2.style.top=ar[1]+'px';
+const b2=document.createElement('b');b2.textContent=ar[0];r2.appendChild(b2);
+const v2=document.createElement('span');v2.dataset.arow=n.id+'|'+ar[0];v2.textContent='0';r2.appendChild(v2);
+el.appendChild(r2)}}
+else if(n.kind==='CAMSCR'){
+const head=document.createElement('div');
+head.className='ntitle';head.textContent=def.title;head.style.cssText='text-align:center;padding:6px 12px 0;font-size:12.5px';
+el.appendChild(head);
+const scr=document.createElement('div');scr.className='camscreen';
+const sp=document.createElement('span');sp.dataset.camscr=n.id;sp.textContent='NO SIGNAL';scr.appendChild(sp);
+el.appendChild(scr)}
 else{
 const head=document.createElement('div');
 head.className='ntitle';
@@ -769,6 +910,8 @@ const under=document.elementsFromPoint(e.clientX,e.clientY);
 const pe=under.map(el=>el.closest?el.closest('[data-port]'):null).find(Boolean);
 if(pe){beginPortDrag(pe);return}
 if(sel&&sel.type==='wire'&&sel.id===w.id){deleteWire(w.id);return}
+const tgt=under.find(el=>el instanceof HTMLElement&&el!==document.documentElement&&el!==document.body&&!(el.id==='cv')&&!(el.id==='world'));
+if(tgt&&tgt.closest('.node,.shape')){tgt.dispatchEvent(new PointerEvent('pointerdown',{clientX:e.clientX,clientY:e.clientY,screenX:e.screenX,screenY:e.screenY,button:0,buttons:1,bubbles:true,cancelable:true,pointerId:e.pointerId,pointerType:e.pointerType,isPrimary:true}));return}
 select({type:'wire',id:w.id})});
 wireG.appendChild(vis);wireG.appendChild(hit);
 wireEls.set(w.id,vis)}
@@ -794,10 +937,10 @@ n.params[key]=v;
 scheduleSave();
 const el=nodeEls.get(id);
 if(el){
-if(n.kind==='BUTTON'){
+if(n.kind==='BUTTON'||n.kind==='ONEBTN'){
 const dome=el.querySelector('.dome');if(dome)dome.className='dome '+(v>0.5?'on':'off')}
 if(n.kind==='SWITCH'){
-const kn=el.querySelector('.swknob');if(kn)kn.style.top=v>0.5?'34px':'134px'}
+const kn=el.querySelector('.swknob');if(kn)kn.style.top=v>0.5?'34px':(v<-0.5?'134px':'84px')}
 if(n.kind==='CONST'){
 const tr=el.querySelector('.ctrack');if(tr&&tr._upd)tr._upd()}}}
 function deleteNode(id){
@@ -874,19 +1017,21 @@ palEl.innerHTML='';
 for(const[sec,kinds]of PALETTE){
 const h=document.createElement('div');h.className='psec';h.textContent=sec;palEl.appendChild(h);
 for(const k of kinds){
-const it=document.createElement('div');it.className='pitem';it.title=k;
+const nm=SHAPE_KINDS.includes(k)?k:(BLOCKS[k].pn||k);
+const it=document.createElement('div');it.className='pitem';it.title=nm;
 const th=document.createElement('div');th.className='pthumb';
 if(k==='THRUSTER'){th.innerHTML='<svg viewBox="0 0 32 28" style="width:22px;height:19px"><path d="M12 17 C 12 23 16 27 16 27 C 16 27 20 23 20 17 Z" fill="#f6a623"/><rect x="9" y="2" width="14" height="16" rx="2.5" fill="#ababab"/></svg>'}
 else if(k==='SWITCH'){th.style.background='#8d8d8d';th.innerHTML='<span style="display:block;width:13px;height:13px;border-radius:50%;background:#e0473c"></span>'}
 else if(k==='STORE'){th.style.fontSize='7px';th.textContent='ST'}
 else if(k==='ATT'||k==='ALT'){th.style.background='#b13a2e';th.style.color='#fff';th.style.fontSize='6.5px';th.textContent=k}
-else if(k==='BUTTON'){th.style.background='#37a847';th.style.color='#fff';th.style.fontSize='6.5px';th.textContent='BTN'}
+else if(k==='BUTTON'){th.style.background='#37a847';th.style.color='#fff';th.style.fontSize='6.5px';th.textContent='SW'}
+else if(k==='ONEBTN'){th.style.background='#b13a2e';th.style.color='#fff';th.style.fontSize='6.5px';th.textContent='BTN'}
 else if(k==='SQUARE'){th.style.background='#fff'}
 else if(k==='GRAY'){th.style.background='#ababab'}
 else if(k==='BLACK'){th.style.background='#101010'}
-else{th.style.fontSize=(k.length>4?4.5:6.5)+'px';th.textContent=k}
+else{th.style.fontSize=(nm.length>4?4.5:6.5)+'px';th.textContent=nm}
 const txt=document.createElement('div');txt.className='ptxt';
-txt.innerHTML='<b>'+k+'</b><span>'+(SHAPE_KINDS.includes(k)?'SHAPE':BLOCKS[k].cat)+'</span>';
+txt.innerHTML='<b>'+nm+'</b><span>'+(SHAPE_KINDS.includes(k)?'SHAPE':BLOCKS[k].cat)+'</span>';
 it.appendChild(th);it.appendChild(txt);
 it.addEventListener('click',()=>SHAPE_KINDS.includes(k)?addShape(k==='BLACK'?'black':k==='GRAY'?'gray':'white'):addBlock(k));
 palEl.appendChild(it)}}}
@@ -908,6 +1053,8 @@ if(n.kind==='ALT'){
 const t=document.createElement('div');t.className='snode';t.textContent='ALT';panel.appendChild(t);
 envRow(n.id,'alt','ALT',0,100,t);
 panel.appendChild(t)}
+const SROWS={SPEED:[['speed','SPD',0,200]],VELOCITY:[['vx','VX',-100,100],['vy','VY',-100,100],['vz','VZ',-100,100]],ANGVEL:[['ax','AX',-1,1],['ay','AY',-1,1],['az','AZ',-1,1]],DISTANCE:[['dist','DIST',0,500]],DRAG:[['drag','DRAG',0,1]],LIFT:[['lift','LIFT',0,100]],ETHRUST:[['ethrust','THRUST',0,100]],DVEL:[['dv','DV',0,500]],DENSITY:[['den','DEN',0,1]],MASS:[['mass','MASS',0,10000]],TEMP:[['temp','TEMP',-50,150]],HEAT:[['heat','HEAT',0,100]],IMPACT:[['imp','IMPACT',0,100]]};
+if(SROWS[n.kind]){const t=document.createElement('div');t.className='snode';t.textContent=BLOCKS[n.kind].title;panel.appendChild(t);for(const sr of SROWS[n.kind])envRow(n.id,sr[0],sr[1],sr[2],sr[3],t);panel.appendChild(t)}
 if(n.kind==='THRUSTER'){
 const t=document.createElement('div');t.className='snode';t.textContent='THRUSTER';panel.appendChild(t);
 const row=document.createElement('div');row.className='srow';
@@ -926,8 +1073,8 @@ sl.addEventListener('input',()=>{if(!env[nid])env[nid]={yaw:0,pitch:0,roll:0,alt
 const sv=document.createElement('span');sv.className='sv';sv.dataset.envv=nid+'|'+key;sv.textContent='0';
 row.appendChild(lab);row.appendChild(sl);row.appendChild(sv);parent.appendChild(row)}
 function startSim(){
-if(simOn)return;simOn=true;time=0;pidState={};memState={};prevOuts=new Map();
-for(const n of nodes)if(!env[n.id])env[n.id]={yaw:0,pitch:0,roll:0,alt:10};
+if(simOn)return;simOn=true;time=0;pidState={};memState={};timerState={};cntState={};prevOuts=new Map();
+for(const n of nodes)if(!env[n.id])env[n.id]=Object.assign({yaw:0,pitch:0,roll:0,alt:10},ENV_DEFAULTS);
 $('simBtn').classList.add('on');
 $('simBtn').innerHTML='<span class="ic">&#9632;</span>STOP';
 buildPanel();
@@ -975,7 +1122,12 @@ const pct=el.querySelector('[data-tpct]');
 if(pct){
 const t=clamp(outs.get(pid+'|__thrust')??0,0,1);
 pct.style.display=simOn&&t>0?'block':'none';
-pct.textContent=Math.round(t*100)+'%'}}
+pct.textContent=Math.round(t*100)+'%'}
+const ndsp=el.querySelector('[data-numdsp]');
+if(ndsp){const v=inVals.get(pid+'|IN');ndsp.textContent=simOn?fmt(v===undefined?0:v):'--'}
+for(const ar of el.querySelectorAll('[data-arow]')){const v=outs.get(ar.dataset.arow);ar.textContent=fmt(v===undefined?0:v)}
+const cs=el.querySelector('[data-camscr]');
+if(cs){const live=simOn&&outs.get(pid+'|__live')===1;cs.textContent=live?'LIVE':'NO SIGNAL';cs.parentElement.classList.toggle('live',live)}}
 if(simOn){
 for(const sl of panel.querySelectorAll('[data-env]')){
 const[nid,key]=sl.dataset.env.split('|');
@@ -999,7 +1151,7 @@ function loadGraph(g,quiet){
 nodes=sanitizeNodes(g.nodes);
 wires=sanitizeWires(g.wires,nodes);
 shapes=sanitizeShapes(g.shapes);
-sel=null;env={};pidState={};memState={};drag=null;
+sel=null;env={};pidState={};memState={};timerState={};cntState={};drag=null;
 for(const el of nodeEls.values())el.remove();
 nodeEls.clear();
 for(const el of shapeEls.values())el.remove();
@@ -1140,7 +1292,7 @@ e.target.value=''});
 $('clearBtn').addEventListener('click',()=>{
 if(!nodes.length&&!shapes.length)return;
 if(!confirm('Clear all the logic? I mean i guess thats why you pressed this button but just think about it!'))return;
-nodes=[];wires=[];shapes=[];sel=null;env={};pidState={};memState={};
+nodes=[];wires=[];shapes=[];sel=null;env={};pidState={};memState={};timerState={};cntState={};
 if(simOn)stopSim();
 renderAll();scheduleSave();toast('Cleared')});
 $('zoomIn').addEventListener('click',()=>{const r=cv.getBoundingClientRect();zoomAt(r.left+r.width/2,r.top+r.height/2,1.2)});
@@ -1161,24 +1313,49 @@ renderAll()})();
 </script>
 <script>
 const SITE_META={
-CONST:{cat:'INPUT',th:'C',t:'A fixed number',d:'Outputs a constant value you pick on the slider, anywhere from -1 to 1. The starting point for setpoints, offsets and quick tests.',ins:[],outs:[['OUT','The value you set, every single tick']],prm:[['VALUE','The slider value, from -1 to 1']],use:'Wire it into a PID target, or straight into a thruster for a fixed burn.'},
-BUTTON:{cat:'INPUT',th:'B',t:'A manual on / off',d:'Click the green dome to toggle between 0 and 1. It stays where you leave it, so it works like a latching switch you drive by hand.',ins:[],outs:[['OUT','1 while the dome is on, 0 while it is off']],prm:[],use:'Wire it into a thruster to test thrust, or into the Store input of STORE to capture a value on demand.'},
-SWITCH:{cat:'INPUT',th:'SW',t:'A physical toggle switch',d:'Flip the red knob up or down. The top OUT carries 1 when the switch is up and 0 when it is down. The bottom OUT always carries the opposite, so one block gives you the state and its inverse.',ins:[],outs:[['OUT (top)','1 when the knob is up'],['OUT (bottom)','1 when the knob is down']],prm:[],use:'Use the top OUT to arm a system and the bottom OUT to drive the fallback path at the same time.'},
+CONST:{cat:'DATA',th:'C',t:'A fixed number',d:'Outputs a constant value you pick on the slider, anywhere from -1 to 1. The starting point for setpoints, offsets and quick tests.',ins:[],outs:[['OUT','The value you set, every single tick']],prm:[['VALUE','The slider value, from -1 to 1']],use:'Wire it into a PID target, or straight into a thruster for a fixed burn.'},
+BUTTON:{cat:'CONTROLS',th:'B',t:'A momentary button',d:'Hold it down and OUT is 1, let go and it springs back to 0. It only stays on while you are pressing it.',ins:[],outs:[['OUT','1 while held, 0 when released']],prm:[],use:'Wire it into a horn, a booster or any system that should only run while the pilot holds it down.'},
+SWITCH:{cat:'CONTROLS',th:'SW',t:'A manual on / off',d:'Click the green dome to toggle between 0 and 1. It stays where you leave it, so it works like a latching switch you drive by hand.',ins:[],outs:[['OUT','1 while the dome is on, 0 while it is off']],prm:[],use:'Wire it into a thruster to test thrust, or into the Store input of STORE to capture a value on demand.'},
+LEVER:{cat:'CONTROLS',th:'LV',t:'A spring-loaded lever',d:'The lever rests in the middle. Hold it up or down and the matching output turns on; let go and it springs straight back to the middle and both outputs go quiet.',ins:[],outs:[['UP','1 while you hold the lever up'],['DOWN','1 while you hold the lever down']],prm:[],use:'Hold UP to raise a hook, let go to stop, hold DOWN to lower it. Great for cranes, winches and flaps.'},
 PID:{cat:'LOGIC',th:'PID',t:'Steers towards a target',d:'Compares TARGET with CURRENT and outputs how hard to push to close the gap. P reacts to the error right now, I adds up error over time, D smooths out fast changes. Most hover setups live on P alone.',ins:[['TARGET','Where you want to be'],['CURRENT','Where you actually are']],outs:[['OUT','The correction, feed it into thrusters or math']],prm:[['P','Strength of the push, start around 1 or 2'],['I','Fixes small standing errors over time'],['D','Dampens overshoot']],use:'ALT into CURRENT, your chosen height into TARGET, OUT into a thruster. That is a height hold.'},
 STORE:{cat:'LOGIC',th:'ST',t:'Remembers a value',d:'While the Store input is on (1 or more), whatever comes into Value gets saved into memory. The Stored output gives back the saved number, even after Store turns off. Nothing changes until you trigger Store again.',ins:[['Value','The number you want to keep'],['Store','While this is 1, Value is saved into memory']],outs:[['Stored','The value currently in memory']],prm:[],use:'Button into Store, ALT into Value: click once and your current altitude is locked in as the target for a PID. That is how you set a hover height in flight.'},
-ADD:{cat:'MATH',th:'+',t:'A + B',d:'Adds the two inputs together and outputs the sum.',ins:[['A','First number'],['B','Second number']],outs:[['OUT','A + B']],prm:[],use:'Combine a base throttle with a PID correction.'},
-SUB:{cat:'MATH',th:'-',t:'A - B',d:'Subtracts B from A and outputs the difference.',ins:[['A','First number'],['B','Subtracted from A']],outs:[['OUT','A - B']],prm:[],use:'Compare two sensors, or trim a signal down.'},
-MUL:{cat:'MATH',th:'\u00d7',t:'A \u00d7 B',d:'Multiplies the two inputs together.',ins:[['A','First number'],['B','Second number']],outs:[['OUT','A \u00d7 B']],prm:[],use:'Scale a sensor range down: ALT (0 to 100) times 0.01 gives 0 to 1.'},
-DIV:{cat:'MATH',th:'\u00f7',t:'A \u00f7 B',d:'Divides A by B. If B is 0 the output is 0, so it never blows up.',ins:[['A','Dividend'],['B','Divisor']],outs:[['OUT','A \u00f7 B']],prm:[],use:'Turn one signal into a fraction of another.'},
-MIN:{cat:'MATH',th:'MIN',t:'The smaller one',d:'Outputs whichever input is lower right now. A soft floor for signals.',ins:[['A','First number'],['B','Second number']],outs:[['OUT','Whichever is smaller']],prm:[],use:'Cap thrust from below without a CLAMP box.'},
-MAX:{cat:'MATH',th:'MAX',t:'The bigger one',d:'Outputs whichever input is higher right now. A soft ceiling for signals.',ins:[['A','First number'],['B','Second number']],outs:[['OUT','Whichever is bigger']],prm:[],use:'Keep a minimum idle thrust no matter what the PID says.'},
-INVERT:{cat:'MATH',th:'\u00b1',t:'Flips the sign',d:'0.5 becomes -0.5 and -1 becomes 1.',ins:[['IN','Any signal']],outs:[['OUT','The same value, negated']],prm:[],use:'Drive two thrusters in opposite directions from one sensor.'},
-ABS:{cat:'MATH',th:'|X|',t:'Drops the minus',d:'Negative becomes positive, positive stays as it is.',ins:[['IN','Any signal']],outs:[['OUT','The size of the value, always positive']],prm:[],use:'React to tilt amount when direction does not matter.'},
-CLAMP:{cat:'MATH',th:'><',t:'Keeps it in range',d:'Lets the input through but holds it between the MIN and MAX you set. The safety net that keeps thrusters fed with 0 to 1.',ins:[['IN','Any signal']],outs:[['OUT','The input, limited to your range']],prm:[['MIN','Lowest allowed value'],['MAX','Highest allowed value']],use:'Put it before a thruster so a runaway PID can never demand more than full power.'},
+ADD:{cat:'ARITHMETIC',th:'+',t:'A + B',d:'Adds the two inputs together and outputs the sum.',ins:[['A','First number'],['B','Second number']],outs:[['OUT','A + B']],prm:[],use:'Combine a base throttle with a PID correction.'},
+SUB:{cat:'ARITHMETIC',th:'-',t:'A - B',d:'Subtracts B from A and outputs the difference.',ins:[['A','First number'],['B','Subtracted from A']],outs:[['OUT','A - B']],prm:[],use:'Compare two sensors, or trim a signal down.'},
+MUL:{cat:'ARITHMETIC',th:'\u00d7',t:'A \u00d7 B',d:'Multiplies the two inputs together.',ins:[['A','First number'],['B','Second number']],outs:[['OUT','A \u00d7 B']],prm:[],use:'Scale a sensor range down: ALT (0 to 100) times 0.01 gives 0 to 1.'},
+DIV:{cat:'ARITHMETIC',th:'\u00f7',t:'A \u00f7 B',d:'Divides A by B. If B is 0 the output is 0, so it never blows up.',ins:[['A','Dividend'],['B','Divisor']],outs:[['OUT','A \u00f7 B']],prm:[],use:'Turn one signal into a fraction of another.'},
+MIN:{cat:'COMPARE',th:'MIN',t:'The smaller one',d:'Outputs whichever input is lower right now. A soft floor for signals.',ins:[['A','First number'],['B','Second number']],outs:[['OUT','Whichever is smaller']],prm:[],use:'Cap thrust from below without a CLAMP box.'},
+MAX:{cat:'COMPARE',th:'MAX',t:'The bigger one',d:'Outputs whichever input is higher right now. A soft ceiling for signals.',ins:[['A','First number'],['B','Second number']],outs:[['OUT','Whichever is bigger']],prm:[],use:'Keep a minimum idle thrust no matter what the PID says.'},
+INVERT:{cat:'ARITHMETIC',th:'\u00b1',t:'Flips the sign',d:'0.5 becomes -0.5 and -1 becomes 1.',ins:[['IN','Any signal']],outs:[['OUT','The same value, negated']],prm:[],use:'Drive two thrusters in opposite directions from one sensor.'},
+ABS:{cat:'ARITHMETIC',th:'|X|',t:'Drops the minus',d:'Negative becomes positive, positive stays as it is.',ins:[['IN','Any signal']],outs:[['OUT','The size of the value, always positive']],prm:[],use:'React to tilt amount when direction does not matter.'},
+CLAMP:{cat:'COMPARE',th:'><',t:'Keeps it in range',d:'Lets the input through but holds it between the MIN and MAX you set. The safety net that keeps thrusters fed with 0 to 1.',ins:[['IN','Any signal']],outs:[['OUT','The input, limited to your range']],prm:[['MIN','Lowest allowed value'],['MAX','Highest allowed value']],use:'Put it before a thruster so a runaway PID can never demand more than full power.'},
 ATT:{cat:'SENSORS',th:'ATT',t:'Knows your rotation',d:'Outputs the craft rotation as three signals, each from -1 to 1: YAW (left / right), PITCH (nose up / down) and ROLL (tilt). In the simulator they sweep on their own; in the game they read the real gyro.',ins:[],outs:[['YAW','Left / right rotation, -1 to 1'],['PITCH','Nose up / down, -1 to 1'],['ROLL','Tilt, -1 to 1']],prm:[],use:'ROLL into a PID CURRENT, 0 into TARGET, and the output levels you out.'},
 ALT:{cat:'SENSORS',th:'ALT',t:'How high you are',d:'Outputs altitude from 0 to 100. In the simulator it sweeps up and down on its own; in the game it reads the real altimeter.',ins:[],outs:[['ALT','Altitude, 0 to 100']],prm:[],use:'Times 0.01 it becomes a 0 to 1 signal. Into a PID CURRENT it becomes a height hold.'},
+FLIGHTSTICK:{nm:'FLIGHT STICK',cat:'CONTROLS',th:'FS',t:'A plane stick',d:'Drag the knob like a flight stick; it springs back to center when you let go. Four outputs, one per direction - UP, DOWN, LEFT and RIGHT - each from 0 to 1 depending on how far you push.',ins:[],outs:[['UP','How far you push up, 0 to 1'],['DOWN','How far you push down, 0 to 1'],['LEFT','How far you push left, 0 to 1'],['RIGHT','How far you push right, 0 to 1']],prm:[],use:'The classic plane controller: UP and DOWN into pitch surfaces, LEFT and RIGHT into roll.'},
+TIMER:{cat:'ARITHMETIC',th:'TMR',t:'A countdown',d:'Pulse START and the timer counts down your SECONDS setting. OUT turns on once time runs out and stays on until RESET. LEFT shows the seconds still on the clock while it runs.',ins:[['START','Pulse to begin the countdown'],['RESET','Clears the timer back to ready']],outs:[['OUT','1 once the countdown finishes'],['LEFT','Seconds remaining while counting']],prm:[['SECONDS','How long the countdown runs']],use:'Button into START, OUT into a thruster or light: press once and something fires a moment later.'},
+SELECT:{cat:'ARITHMETIC',th:'SEL',t:'Selects logic',d:'While SEL is 0 the output follows A, flip SEL to 1 and it follows B. Two sources, one wire out.',ins:[['A','First signal'],['B','Second signal'],['SEL','0 picks A, 1 picks B']],outs:[['OUT','A or B depending on SEL']],prm:[],use:'Swap between manual and automatic control with a switch on SEL.'},
+COUNTER:{cat:'ARITHMETIC',th:'CNT',t:'Counts pulses',d:'Every time COUNT goes from 0 to 1 the count climbs by one. DONE turns on once the count reaches your TARGET. RESET wipes the count back to zero.',ins:[['COUNT','Pulse here to add one'],['RESET','Clears the count']],outs:[['COUNT','The current count'],['DONE','1 once TARGET is reached']],prm:[['TARGET','The count that sets DONE off']],use:'Count button presses to run a sequence: three presses, then launch.'},
+GREATER:{cat:'COMPARE',th:'>',t:'A is bigger',d:'OUT is 1 while A is greater than B and 0 the moment it is not. The raw material of every threshold check.',ins:[['A','First number'],['B','The threshold']],outs:[['OUT','1 when A > B']],prm:[],use:'ALT into A and a CONST into B: OUT turns on above your chosen height.'},
+LESS:{cat:'COMPARE',th:'<',t:'A is smaller',d:'OUT is 1 while A is less than B. Self-explanatory, and endlessly useful.',ins:[['A','First number'],['B','The threshold']],outs:[['OUT','1 when A < B']],prm:[],use:'Overheat cut-off: HEAT into A, your limit into B.'},
+EQUALS:{cat:'COMPARE',th:'=',t:'A matches B',d:'OUT is 1 when A and B are the same number, within a hair. Self-explanatory.',ins:[['A','First number'],['B','Second number']],outs:[['OUT','1 when A equals B']],prm:[],use:'Fire a stage exactly when a counter hits a value.'},
+SPEED:{cat:'SENSORS',th:'SPD',t:'Speedometer',d:'Tracks the speed of the vehicle each frame. In the simulator it sweeps on its own; in the game it reads the real speed.',ins:[],outs:[['SPD','Current speed']],prm:[],use:'Speed into a GREATER to arm systems past a safe velocity.'},
+VELOCITY:{cat:'SENSORS',th:'VEL',t:'Velocity per axis',d:'Outputs VX, VY and VZ - the velocity of the vehicle along each axis. Useful for rocket systems.',ins:[],outs:[['VX','Left / right velocity'],['VY','Up / down velocity'],['VZ','Forward / back velocity']],prm:[],use:'VY into a PID CURRENT and a CONST target in for a smooth vertical speed hold.'},
+ANGVEL:{cat:'SENSORS',th:'ANGV',t:'ANGULAR VELOCITY',d:'How fast the vehicle is rotating around each axis: AX, AY and AZ. Useful for damping wobble on rockets.',ins:[],outs:[['AX','Rotation rate, axis X'],['AY','Rotation rate, axis Y'],['AZ','Rotation rate, axis Z']],prm:[],use:'Feed AX into a PID and the output into gimbal for a gentle ride.'},
+DISTANCE:{cat:'SENSORS',th:'DST',t:'Distance meter',d:'Tracks the distance to another. Useful for rockets and docking.',ins:[],outs:[['DIST','Current distance']],prm:[],use:'Cut engines when DIST drops below your approach number.'},
+DRAG:{cat:'ENVIRONMENT',th:'DRG',t:'Air drag',d:'Tracks the air drag acting on the vehicle right now, 0 to 1.',ins:[],outs:[['DRAG','Current drag, 0 to 1']],prm:[],use:'Compensate drag with extra throttle when flying low and slow.'},
+LIFT:{cat:'ENVIRONMENT',th:'LFT',t:'Lift',d:'Tracks the increasing lift the vehicle generates as it speeds up. Useful for rockets and runway runs.',ins:[],outs:[['LIFT','Current lift']],prm:[],use:'Pull up only once LIFT is high enough to actually climb.'},
+ETHRUST:{cat:'ENVIRONMENT',th:'ETH',t:'EFFECTIVE THRUST',d:'How much thrust is actually pushing the vehicle after losses. Self-explanatory but handy.',ins:[],outs:[['THRUST','Effective thrust']],prm:[],use:'Compare it with MASS to see if you can even lift off.'},
+DVEL:{cat:'ENVIRONMENT',th:'DV',t:'DELTA-V',d:'Estimates how much total burn the vehicle still has left in its tanks.',ins:[],outs:[['DV','Remaining delta-v']],prm:[],use:'Budget your burn: stop pushing when DV gets near the reserve line.'},
+DENSITY:{cat:'ENVIRONMENT',th:'DEN',t:'Air density',d:'How thick the air is, 0 to 1. Falls off as you climb - jet engines notice.',ins:[],outs:[['DEN','Air density, 0 to 1']],prm:[],use:'Scale thrust by DENSITY so engines behave realistically with altitude.'},
+MASS:{cat:'ENVIRONMENT',th:'MAS',t:'Weight',d:'Tracks the mass of the vehicle as fuel burns off.',ins:[],outs:[['MASS','Total mass']],prm:[],use:'Divide thrust by MASS for real acceleration numbers.'},
+TEMP:{cat:'ENVIRONMENT',th:'TMP',t:'TEMPERATURE',d:'Tracks the temperature around the vehicle.',ins:[],outs:[['TEMP','Current temperature']],prm:[],use:'Warning light past a temperature threshold.'},
+HEAT:{cat:'ENVIRONMENT',th:'HET',t:'Heat',d:'Calculates how much heat the vehicle is receiving. Pair it with a cooler or back off the throttle.',ins:[],outs:[['HEAT','Heat received, 0 to 100']],prm:[],use:'GREATER into a thruster cut-off so you never cook the craft.'},
+IMPACT:{cat:'ENVIRONMENT',th:'IMP',t:'Impact sensor',d:'Triggers the moment the sensor feels a hit harder than THRESHOLD. VERY SENSITIVE - even small bumps can set it off.',ins:[],outs:[['TRIG','1 while an impact is detected']],prm:[['THRESHOLD','Minimum force that counts as a hit']],use:'Crash detection: TRIG fires a beacon or separates a stage.'},
+NUMDISP:{cat:'DISPLAY',th:'123',t:'NUMBER DISPLAY',d:'Shows whatever number you wire into IN as big readable digits. Wire any sensor straight into it.',ins:[['IN','The number to show']],outs:[],prm:[],use:'A permanent altimeter, speedometer or fuel gauge on your dashboard.'},
+ATTDISP:{cat:'DISPLAY',th:'ATT',t:'Attitude display',d:'Shows the current attitude live: YAW, PITCH and ROLL, each from -1 to 1.',ins:[],outs:[],prm:[],use:'Mount it in the cockpit and level out by eye.'},
+CAMSCR:{cat:'DISPLAY',th:'SCR',t:'CAMERA SCREEN',d:'Displays the feed from a camera. Wire a CAMERA output into FEED and the screen goes live. Only two cameras can be displayed at once.',ins:[['FEED','The camera feed']],outs:[],prm:[],use:'Reverse cameras on cars, docking cameras on rockets.'},
+CAM:{cat:'MISC',th:'CAM',t:'Camera',d:'Mounts a camera on the vehicle. Wire its FEED output into a CAMERA SCREEN to display it. Only two cameras can be displayed at once.',ins:[],outs:[['FEED','The camera feed']],prm:[],use:'One forward, one rear: two cameras, two screens, full awareness.'},
 THRUSTER:{cat:'OUTPUT',th:'THR',t:'The engine',d:'Burns according to THROTTLE from 0 to 1. X and Y are optional gimbal inputs that tilt the thrust for steering. Any input you leave unwired counts as 0.',ins:[['THROTTLE','Power, 0 to 1'],['X','Optional gimbal, -1 to 1'],['Y','Optional gimbal, -1 to 1']],outs:[],prm:[],use:'PID OUT into THROTTLE. Only wire X or Y if you want vector steering.'}};
-const CATS=['ALL','INPUT','MATH','LOGIC','SENSORS','OUTPUT'];
+const CATS=['ALL','DATA','CONTROLS','ARITHMETIC','LOGIC','COMPARE','SENSORS','ENVIRONMENT','DISPLAY','MISC','OUTPUT'];
 let curCat='ALL';
 const siteSide=document.getElementById('sside'),siteGrid=document.getElementById('sgrid'),siteDetail=document.getElementById('sdetail'),siteCount=document.getElementById('scount');
 function catCount(c){return c==='ALL'?Object.keys(SITE_META).length:Object.keys(SITE_META).filter(k=>SITE_META[k].cat===c).length}
@@ -1200,7 +1377,7 @@ for(const k of ks){
 const m=SITE_META[k];
 const card=document.createElement('div');
 card.className='scard';
-card.innerHTML='<div class="chead"><div class="cthumb">'+m.th+'</div><div class="scat2">'+m.cat+'</div></div><div class="cname">'+k+'</div><div class="cdesc">'+m.t+'. '+m.d.split('.')[0]+'.</div><div class="cfoot">IN '+(m.ins.length?m.ins.length:'-')+' \u00b7 OUT '+(m.outs.length?m.outs.length:'-')+(m.prm.length?' \u00b7 '+m.prm.length+' SETTING'+(m.prm.length>1?'S':''):'')+'</div>';
+card.innerHTML='<div class="chead"><div class="cthumb">'+m.th+'</div><div class="scat2">'+m.cat+'</div></div><div class="cname">'+(m.nm||k)+'</div><div class="cdesc">'+m.t+'. '+m.d.split('.')[0]+'.</div><div class="cfoot">IN '+(m.ins.length?m.ins.length:'-')+' \u00b7 OUT '+(m.outs.length?m.outs.length:'-')+(m.prm.length?' \u00b7 '+m.prm.length+' SETTING'+(m.prm.length>1?'S':''):'')+'</div>';
 card.addEventListener('click',()=>{location.hash='#block/'+k});
 siteGrid.appendChild(card)}}
 function renderDetail(k){
@@ -1208,7 +1385,7 @@ const m=SITE_META[k];
 siteGrid.style.display='none';
 siteDetail.style.display='block';
 let h='<a class="dback" href="#blocks">\u2190 ALL BLOCKS</a>';
-h+='<div class="dtitle">'+k+'</div><div class="dcat">'+m.cat+'</div>';
+h+='<div class="dtitle">'+(m.nm||k)+'</div><div class="dcat">'+m.cat+'</div>';
 h+='<p class="ddesc">'+m.d+'</p>';
 if(m.ins.length){h+='<div class="dsec">INPUTS</div>';for(const[n,d]of m.ins)h+='<div class="drow"><div class="dtag">IN</div><b>'+n+'</b><span>'+d+'</span></div>'}
 if(m.outs.length){h+='<div class="dsec">OUTPUTS</div>';for(const[n,d]of m.outs)h+='<div class="drow"><div class="dtag">OUT</div><b>'+n+'</b><span>'+d+'</span></div>'}
@@ -1232,3 +1409,4 @@ route();
 </script>
 </body>
 </html>
+
