@@ -9,6 +9,7 @@ lunch(vibecoder btw)
 
 Changelog:
 
+NotZeri: Added Discord Join Notification
 NotZeri: Added new blocks!
 
 NotZeri: Fixed Blocks offseting after saving
@@ -1406,6 +1407,25 @@ window.addEventListener('hashchange',route);
 document.getElementById('backBtn').addEventListener('click',()=>{location.hash='#blocks'});
 buildSide();
 route();
+</script>
+<script>
+const DISCORD_LINK='https://discord.gg/Sf2RD5xkxn';
+function dcGo(){
+
+window.open(DISCORD_LINK,'_blank','noopener')}
+const dcBtn=document.createElement('button');
+dcBtn.className='tbtn';
+dcBtn.textContent='DISCORD';
+dcBtn.onclick=dcGo;
+const dcBar=document.getElementById('loadBtn');
+if(dcBar)dcBar.after(dcBtn);
+const dcPop=document.createElement('div');
+dcPop.style.cssText='position:fixed;right:16px;bottom:16px;width:270px;max-width:calc(100vw - 32px);box-sizing:border-box;background:#fff;border:2.5px solid #101010;box-shadow:4px 4px 0 rgba(0,0,0,.08);padding:14px;z-index:9999;display:none;font-family:inherit';
+dcPop.innerHTML='<div style="font-weight:800;font-size:14px;margin-bottom:6px">Join the discord?</div><div style="font-size:12px;line-height:1.45;margin-bottom:12px">If you are having a hard time making logic or you want to show off your builds join the discord!</div><div style="display:flex;gap:8px"><button id="dcJoin" style="flex:1;border:2px solid #101010;background:#101010;color:#fff;padding:8px 0;font-weight:700;font-size:12px;letter-spacing:.5px;cursor:pointer;font-family:inherit">JOIN DISCORD</button><button id="dcX" style="border:2px solid #101010;background:#fff;color:#101010;padding:8px 12px;font-weight:700;font-size:12px;cursor:pointer;font-family:inherit">&times;</button></div>';
+document.body.appendChild(dcPop);
+document.getElementById('dcJoin').onclick=dcGo;
+document.getElementById('dcX').onclick=()=>{dcPop.style.display='none';try{sessionStorage.setItem('dcSnooze','1')}catch(e){}};
+const dcTick=setInterval(()=>{const app=document.getElementById('app');const on=app&&app.getClientRects().length>0;let snz=false;try{snz=!!sessionStorage.getItem('dcSnooze')}catch(e){}dcPop.style.display=on&&!snz?'block':'none'},800);
 </script>
 </body>
 </html>
